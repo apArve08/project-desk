@@ -66,6 +66,9 @@ header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 16px
 [data-mode="zoom"] .build-only,[data-mode="zoom"] .learn-only,[data-mode="zoom"] #stage{display:none!important}
 .zoom-only{display:none!important}
 [data-mode="zoom"] .zoom-only{display:flex!important}
+[data-mode="dev"] .build-only,[data-mode="dev"] .learn-only,[data-mode="dev"] #stage{display:none!important}
+.dev-only{display:none!important}
+[data-mode="dev"] .dev-only{display:flex!important}
 
 .btn{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:8px;border:1px solid var(--line);
   background:var(--surface);font:500 13px/1 var(--font-body);cursor:pointer;white-space:nowrap}
@@ -153,6 +156,10 @@ section.block + section.block{margin-top:24px}
 .led.on{fill:var(--signal);stroke:var(--signal);filter:url(#glow)}
 .led-v{font:700 11px var(--font-mono);fill:var(--muted)}
 .led.on + .led-v{fill:#3a2200}
+.hex-body{fill:#1A1D24;stroke:var(--gate-stroke);stroke-width:1.4}
+.sg-on{fill:var(--signal)}
+.sg-off{fill:#3A3F4B}
+.hex-pin{font:600 9px var(--font-mono);fill:#9AA4B8}
 .chip-body{fill:var(--chip-fill);stroke:var(--gate-stroke);stroke-width:1.6}
 .chip-body.missing{stroke:var(--danger);stroke-dasharray:5 4}
 .chip-name{font:700 11px var(--font-display);fill:var(--ink);letter-spacing:.05em}
@@ -214,6 +221,152 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
   background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:13.5px;box-shadow:var(--shadow);
   transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);z-index:30}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* on-ramps */
+.brand-t{display:flex;flex-direction:column;gap:2px}
+.byline{font:500 11px/1 var(--font-body);color:var(--muted);letter-spacing:.01em}
+.lvl{display:inline-block;font:600 9.5px/1 var(--font-body);letter-spacing:.04em;padding:3px 6px;border-radius:6px;vertical-align:1px;margin-left:2px;white-space:nowrap}
+.lvl-b{background:var(--conduct-a);color:var(--conduct)}
+.lvl-i{background:var(--signal-a);color:var(--signal-ink)}
+.lvl-d{background:var(--accent-a);color:var(--accent-ink)}
+.gl{border-bottom:1.5px dotted var(--accent);cursor:help}
+.gl:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+#glpop{position:fixed;z-index:40;display:none;flex-direction:column;gap:4px;padding:10px 12px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:13px;line-height:1.45;box-shadow:var(--shadow);pointer-events:none}
+#glpop.show{display:flex}
+#glpop b{font-size:13.5px;text-transform:capitalize}
+.startpath{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.startpath li{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2)}
+.startpath li > div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.startpath li > div > .lvl{align-self:flex-start;margin-left:0}
+.startpath .btn{flex:none}
+.aboutbrand{display:flex;gap:12px;align-items:center}
+.aboutbrand > div{display:flex;flex-direction:column;gap:2px}
+.pinlist a{color:var(--accent-ink)}
+@media (max-width:560px){ .startpath li{flex-direction:column;align-items:flex-start} .byline{display:none} }
+
+/* for devs */
+.dstage{flex:1;min-height:0;overflow:auto;background:var(--bg);flex-direction:column}
+.dwrap{width:100%;max-width:940px;margin:0 auto;padding:24px;display:flex;flex-direction:column;gap:16px}
+.dtitle{font:700 28px/1.15 var(--font-display);letter-spacing:-.02em;margin:0 0 8px;text-wrap:balance}
+.dintro{max-width:65ch;margin:0;color:var(--muted);font-size:15.5px}
+pre.code{margin:0;font:13px/1.65 var(--font-mono);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px;overflow-x:auto;white-space:pre}
+.code .cm{color:var(--muted)}
+.code .kw{color:var(--accent-ink);font-weight:600}
+.code .hlrow{background:var(--accent-a);border-radius:4px;box-shadow:-6px 0 0 var(--accent-a),6px 0 0 var(--accent-a)}
+.dcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.dcard h3{margin:0;font:600 16px/1.2 var(--font-display)}
+.bitrow{display:flex;gap:8px;flex-wrap:wrap}
+.bitbtn{display:flex;flex-direction:column;align-items:center;gap:4px}
+.bitbtn .w{font:500 10px/1 var(--font-mono);color:var(--muted);white-space:nowrap}
+.bitbtn button{width:46px;height:52px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);font:700 20px/1 var(--font-mono);cursor:pointer;color:var(--muted)}
+.bitbtn button.on{background:var(--signal);border-color:var(--signal);color:#3a2200}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.dnum{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.dnum .k{font:600 11px/1.2 var(--font-body);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.dnum b{font:700 24px/1.2 var(--font-mono);font-variant-numeric:tabular-nums}
+.fbits{display:flex;gap:2px;flex-wrap:wrap;align-items:center}
+.fbit{width:18px;height:34px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);font:700 12px/1 var(--font-mono);cursor:pointer;color:var(--muted);padding:0}
+.fbit.fs{border-bottom:3px solid var(--danger)} .fbit.fe{border-bottom:3px solid var(--accent)} .fbit.fm{border-bottom:3px solid var(--signal)}
+.fbit.on.fs{background:var(--danger);color:#fff} .fbit.on.fe{background:var(--accent);color:#fff} .fbit.on.fm{background:var(--signal);color:#3a2200}
+.fgap{width:8px}
+.flegend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.flegend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+.sw.fs{background:var(--danger)} .sw.fe{background:var(--accent)} .sw.fm{background:var(--signal)}
+.bwgrid{display:flex;flex-direction:column;gap:8px;overflow-x:auto}
+.bwrow{display:flex;gap:6px;align-items:center}
+.bwl{width:60px;font:600 13px var(--font-body);color:var(--muted)}
+.bwb{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);font:700 16px/1 var(--font-mono);display:grid;place-items:center;cursor:pointer;color:var(--muted);flex:none}
+.bwb.on{background:var(--signal);border-color:var(--signal);color:#3a2200}
+.bwb.res{cursor:default;border-style:dashed}
+.bwb.res.on{background:var(--conduct);border-color:var(--conduct);color:#fff;border-style:solid}
+.bwv{font:600 14px var(--font-mono);color:var(--muted);margin-left:8px;white-space:nowrap}
+.bwop{font:700 16px var(--font-mono);color:var(--muted);padding-left:66px}
+.memwrap{display:flex;gap:20px;flex-wrap:wrap}
+.memgrid{display:grid;grid-template-columns:repeat(8,44px);gap:4px}
+.mc{height:34px;border-radius:7px;border:1px solid var(--line);display:grid;place-items:center;font:500 10px var(--font-mono);color:var(--muted);background:var(--surface)}
+.mc.incache{box-shadow:inset 0 0 0 2px var(--accent-a);border-color:var(--accent)}
+.mc.hit{background:var(--conduct-a);border-color:var(--conduct);color:var(--ink)}
+.mc.miss{background:var(--signal-a);border-color:var(--signal);color:var(--ink)}
+.mc.cur{outline:3px solid var(--accent);outline-offset:1px}
+.memside{display:flex;flex-direction:column;gap:6px;min-width:220px;flex:1}
+.cl{font:500 12px var(--font-mono);padding:7px 10px;border-radius:8px;border:1px solid var(--accent);background:var(--accent-a)}
+.cl.empty{border:1px dashed var(--line);background:transparent;color:var(--muted)}
+.cl.now{background:var(--accent);color:#fff}
+.cmp{display:grid;grid-template-columns:auto 1fr auto;gap:8px 12px;align-items:center;font-size:13px}
+.barbg{height:10px;border-radius:5px;background:var(--seg)}
+.bar{height:10px;border-radius:5px;background:var(--conduct)}
+.bar.warn{background:var(--signal)}
+.strip{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:4px}
+.sc{border-radius:7px;border:1px solid var(--line);padding:5px 0;display:flex;flex-direction:column;align-items:center;gap:2px;font:500 10.5px/1.1 var(--font-mono);color:var(--muted)}
+.sc b{color:var(--ink);font-size:11px}
+.sc.ok{background:var(--conduct-a);border-color:var(--conduct)}
+.sc.bad{background:var(--signal-a);border-color:var(--signal)}
+.cores{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center}
+.core{display:flex;flex-direction:column;gap:6px;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:14px}
+.instr{font:500 13px var(--font-mono);padding:7px 10px;border-radius:8px;border:1px solid transparent}
+.instr.done{color:var(--muted);text-decoration:line-through}
+.instr.next{background:var(--accent-a);border-color:var(--accent)}
+.memcell{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px;border-radius:14px;border:2px solid var(--signal);background:var(--signal-a);text-align:center}
+.memcell .k{font:600 11px var(--font-body);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.memcell b{font:700 22px var(--font-mono)}
+.banner{padding:12px 16px;border-radius:12px;font-weight:600}
+.banner.good{background:var(--conduct-a);color:var(--conduct)}
+.banner.bad{background:var(--signal-a);color:var(--signal-ink)}
+.rclog{font:12.5px/1.7 var(--font-mono);background:var(--surface-2);border-radius:10px;padding:10px 14px;max-height:180px;overflow:auto}
+/* dev labs 7-11 */
+.sfields{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
+.sfield{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);border-left-width:5px}
+.sfield code{font:600 14px var(--font-mono)}
+.sfield .btn{height:26px;padding:0 9px}
+.f-a{border-left-color:var(--accent)} .f-b{border-left-color:var(--signal)} .f-c{border-left-color:var(--conduct)} .f-d{border-left-color:var(--low)}
+.bstrip{display:flex;gap:4px;flex-wrap:wrap}
+.bcell{width:52px;height:64px;border-radius:9px;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.bcell b{font:700 15px var(--font-mono)}
+.bcell .bo{font:500 9.5px var(--font-mono);color:var(--muted)}
+.bcell .bf{font:600 10px var(--font-mono);color:var(--muted)}
+.bcell.f-a{background:var(--accent-a);border-color:var(--accent)} .bcell.f-b{background:var(--signal-a);border-color:var(--signal)}
+.bcell.f-c{background:var(--conduct-a);border-color:var(--conduct)} .bcell.f-d{background:color-mix(in srgb,var(--low) 16%,transparent);border-color:var(--low)}
+.bcell.pad{background:repeating-linear-gradient(45deg,var(--surface-2) 0 5px,var(--seg) 5px 10px);color:var(--muted)}
+.bcell.pad b{font-size:11px;font-weight:600;color:var(--muted)}
+.stkwrap{display:flex;gap:20px;flex-wrap:wrap}
+.stack{display:flex;flex-direction:column;gap:4px;width:min(360px,100%)}
+.sframe{position:relative;display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center;padding:7px 12px;border-radius:9px;border:1px solid var(--accent);background:var(--accent-a);font-size:13px}
+.sframe b{font:600 13px var(--font-mono)}
+.sframe .note{grid-column:2;font-size:11.5px}
+.sframe .sa{grid-row:span 2;font:500 10px var(--font-mono);color:var(--muted)}
+.sframe.top{background:var(--accent);color:#fff;border-color:var(--accent)} .sframe.top .note,.sframe.top .sa{color:rgba(255,255,255,.8)}
+.sframe.empty{background:transparent;border:1px dashed var(--line)}
+.sframe.over{background:var(--signal-a);border:2px dashed var(--danger);grid-template-columns:1fr}
+.sframe.over .note{grid-column:1}
+.sp{position:absolute;right:12px;top:50%;transform:translateY(-50%);font:700 12px var(--font-mono);color:#fff}
+.vaddr{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.vpart{font:600 14px var(--font-mono);padding:8px 12px;border-radius:9px}
+.vpart.vpn{background:var(--accent-a);color:var(--accent-ink)} .vpart.off{background:var(--seg)} .vpart.phys{background:var(--conduct-a);color:var(--conduct)} .vpart.bad{background:var(--signal-a);color:var(--danger)}
+.varrow{color:var(--muted);font-size:18px}
+.vmgrid{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:16px}
+.vmgrid > div{display:flex;flex-direction:column;gap:5px}
+.ptable{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px}
+.ptr{display:flex;justify-content:space-between;align-items:center;font:500 12px var(--font-mono);padding:3px 6px;border-radius:6px}
+.ptr.now{background:var(--accent-a);outline:1.5px solid var(--accent)}
+.pill{font:600 10.5px var(--font-body);padding:2px 7px;border-radius:10px}
+.pill.mem{background:var(--conduct-a);color:var(--conduct)} .pill.disk{background:var(--signal-a);color:var(--signal-ink)} .pill.none{background:var(--seg);color:var(--muted)}
+.pframes{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.pframe{display:flex;flex-direction:column;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2)}
+.pframe b{font:600 12px var(--font-mono)}
+.pframe.free b{color:var(--muted);font-weight:500}
+.pframe.now{border-color:var(--conduct);background:var(--conduct-a)}
+.sgrid{display:flex;flex-direction:column;gap:6px;overflow-x:auto}
+.srow{display:flex;gap:4px;align-items:center}
+.scell{width:36px;height:36px;flex:none;border-radius:8px;border:1px solid var(--line);display:grid;place-items:center;font:600 14px var(--font-mono);background:var(--surface-2)}
+.scell.alt{background:var(--seg)}
+.scell.empty{color:var(--muted);border-style:dashed}
+.scell.done{background:var(--conduct-a);border-color:var(--conduct)}
+.scell.cur{outline:2.5px solid var(--accent);outline-offset:1px}
+.kvt{display:grid;grid-template-columns:auto 1fr auto;gap:6px 14px;align-items:center}
+.kvt .k{font:600 12px var(--font-body);color:var(--muted);white-space:nowrap}
+.kvt code{font:600 15px var(--font-mono);word-break:break-all;background:var(--surface-2);padding:6px 10px;border-radius:8px}
+@media (max-width:900px){ .vmgrid{grid-template-columns:1fr} .sp{display:none} }
+@media (max-width:700px){ .strip{grid-template-columns:repeat(8,minmax(0,1fr))} .cores{grid-template-columns:1fr} .memgrid{grid-template-columns:repeat(8,minmax(0,1fr))} }
 
 /* live chip (zoom) */
 .zstage{flex:1;min-height:0;flex-direction:column;background:var(--bg);position:relative}
@@ -357,6 +510,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
   .tv-canvas{height:56vh}
   .tv-side{border-left:0;border-top:1px solid var(--line)}
   .zstage{min-height:72vh}
+  .dstage{overflow:visible}
   html,body{height:auto}
   .app{height:auto;min-height:100%}
   .main{grid-template-columns:1fr}
@@ -381,14 +535,17 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
   <header>
     <div class="brand">
       <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="5" y="5" width="16" height="16" rx="4" fill="var(--accent)"/><path d="M9 1v4M13 1v4M17 1v4M9 21v4M13 21v4M17 21v4M1 9h4M1 13h4M1 17h4M21 9h4M21 13h4M21 17h4" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round"/><circle cx="13" cy="13" r="3" fill="var(--signal)"/></svg>
-      Chip Lab
+      <span class="brand-t">Chip Lab<span class="byline">by AP Tensor Lab</span></span>
     </div>
     <div class="seg" role="group" aria-label="Mode">
       <button id="modeLearn" aria-pressed="true">Learn</button>
       <button id="modeBuild" aria-pressed="false">Build</button>
       <button id="modeZoom" aria-pressed="false">Live chip</button>
+      <button id="modeDev" aria-pressed="false">For devs</button>
     </div>
     <div class="spacer"></div>
+    <button class="btn quiet" id="startBtn">Start here</button>
+    <button class="btn quiet" id="aboutBtn">About</button>
     <button class="btn" id="tvBtn" title="See the CMOS transistors inside a gate">Transistor view</button>
     <div class="actions build-only">
       <button class="btn" id="undoBtn" title="Undo (Ctrl/⌘ Z)">Undo</button>
@@ -421,6 +578,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
           <button id="zoomFit" class="txt">Fit</button>
         </div>
       </div>
+      <div class="dstage dev-only" id="dstage"></div>
       <div class="zstage zoom-only" id="zstage">
         <nav class="crumbs" id="crumbs" aria-label="Zoom level"></nav>
         <div class="zwrap"><svg id="zsvg" aria-label="Live chip" preserveAspectRatio="xMidYMid meet"></svg></div>
@@ -467,10 +625,11 @@ const GATES = {
   OR:   {n:2, t:6, f:a => [a[0] | a[1]], d:"1 if either is 1."},
   NAND: {n:2, t:4, f:a => [(a[0] & a[1]) ? 0 : 1], d:"NOT of AND. Universal."},
   NOR:  {n:2, t:4, f:a => [(a[0] | a[1]) ? 0 : 1], d:"NOT of OR. Universal."},
-  XOR:  {n:2, t:8, f:a => [a[0] ^ a[1]], d:"1 if they differ."},
-  XNOR: {n:2, t:8, f:a => [(a[0] ^ a[1]) ? 0 : 1], d:"1 if they match."}
+  XOR:  {n:2, t:12, f:a => [a[0] ^ a[1]], d:"1 if they differ."},
+  XNOR: {n:2, t:12, f:a => [(a[0] ^ a[1]) ? 0 : 1], d:"1 if they match."}
 };
-const IO_TYPES = ["IN", "OUT", "CLOCK", "CHIP"];
+const IO_TYPES = ["IN", "OUT", "CLOCK", "CHIP", "HEX"];
+const SEG7 = ["abcdef","bc","abdeg","abcdg","bcfg","acdfg","acdefg","abc","abcdefg","abcdfg","abcefg","cdefg","adef","bcdeg","adefg","aefg"];
 const lib = new Map(); // name -> {name, circuit, builtin, io:{ins,outs}, transistors}
 
 function ioOrder(c){
@@ -509,12 +668,13 @@ function usesChip(c, name, depth){
 function nIns(n){
   if (n.type === "IN" || n.type === "CLOCK") return 0;
   if (n.type === "OUT") return 1;
+  if (n.type === "HEX") return 4;
   if (n.type === "CHIP"){ const d = lib.get(n.chip); return d ? d.io.ins.length : 0; }
   return GATES[n.type] ? GATES[n.type].n : 0;
 }
 function nOuts(n){
   if (n.type === "IN" || n.type === "CLOCK") return 1;
-  if (n.type === "OUT") return 0;
+  if (n.type === "OUT" || n.type === "HEX") return 0;
   if (n.type === "CHIP"){ const d = lib.get(n.chip); return d ? d.io.outs.length : 0; }
   return 1;
 }
@@ -526,6 +686,7 @@ function geom(n){
   switch (n.type){
     case "IN": case "CLOCK": return { w:52, h:32, ins:[], outs:[{x:52, y:16}] };
     case "OUT": return { w:40, h:32, ins:[{x:0, y:16}], outs:[] };
+    case "HEX": return { w:80, h:96, ins:[16, 36, 56, 76].map((y, i) => ({x:0, y, label:String(1 << i)})), outs:[] };
     case "NOT": return { w:60, h:40, ins:[{x:0, y:20}], outs:[{x:60, y:20}] };
     case "CHIP": {
       const d = lib.get(n.chip); const io = d ? d.io : {ins:[], outs:[]};
@@ -580,7 +741,7 @@ class Sim {
     switch (n.type){
       case "IN": return [this.ov.has(n.id) ? this.ov.get(n.id) : (n.value | 0)];
       case "CLOCK": return [n.value | 0];
-      case "OUT": return [];
+      case "OUT": case "HEX": return [];
       case "CHIP": {
         const s = this.sub.get(n.id); if (!s) return new Array(nOuts(n)).fill(0);
         const a = []; for (let i = 0; i < s.ins.length; i++) a.push(this.inv(n, i));
@@ -659,6 +820,16 @@ function nodeSVG(n, s, ed, sel){
         <path class="clk-wave" d="M7,22 h7 v-12 h8 v12 h8 v-12 h7"/>
         <text class="lbl" x="22" y="-8" text-anchor="middle">${esc(n.label || "CLK")}</text>`;
       break;
+    case "HEX": {
+      const bits = [0, 1, 2, 3].map(inV), v = bits.reduce((t, b, i) => t | (b << i), 0), on = SEG7[v];
+      const S = {a:[30, 12, 26, 6], b:[56, 16, 6, 30], c:[56, 50, 6, 30], d:[30, 80, 26, 6], e:[24, 50, 6, 30], f:[24, 16, 6, 30], g:[30, 46, 26, 6]};
+      g.ins.forEach((p, i) => { b += `<line class="stub${bits[i] ? " on" : ""}" x1="0" y1="${p.y}" x2="10" y2="${p.y}"/>`; });
+      b += `<rect class="hex-body" x="10" y="0" width="60" height="96" rx="10"/>`;
+      for (const k in S){ const r = S[k]; b += `<rect class="${on.includes(k) ? "sg-on" : "sg-off"}" x="${r[0]}" y="${r[1]}" width="${r[2]}" height="${r[3]}" rx="2.5"/>`; }
+      g.ins.forEach(p => { b += `<text class="hex-pin" x="14" y="${p.y + 3}">${p.label}</text>`; });
+      b += `<text class="cap" x="40" y="112" text-anchor="middle">0x${v.toString(16).toUpperCase()} = ${v}</text>`;
+      break;
+    }
     case "OUT": {
       const v = inV(0);
       b += `<line class="stub${v ? " on" : ""}" x1="0" y1="16" x2="13" y2="16"/>
@@ -720,7 +891,7 @@ function circBBox(c){
     const g = geom(n);
     const right = n.type === "OUT" ? 52 + String(n.label || "").length * 7.5 : 12;
     x0 = Math.min(x0, n.x - 14); y0 = Math.min(y0, n.y - 26);
-    x1 = Math.max(x1, n.x + g.w + right); y1 = Math.max(y1, n.y + g.h + (GATES[n.type] ? 22 : 12));
+    x1 = Math.max(x1, n.x + g.w + right); y1 = Math.max(y1, n.y + g.h + (GATES[n.type] || n.type === "HEX" ? 22 : 12));
   }
   return {x:x0, y:y0, w:x1 - x0, h:y1 - y0};
 }
@@ -946,7 +1117,7 @@ const LESSONS = [
   { t:"XOR: are they different?", s:"comparing bits",
     p:["XOR outputs 1 when its inputs differ. XNOR does the reverse: it outputs 1 when they match, which is how a chip checks whether two values are equal.",
        "XOR is also binary addition without the carry: 1 + 1 gives 0 in this column, with a 1 carried to the next."],
-    tryit:"Set A and B to the same value, then to different values.",
+    tryit:"Set A and B to the same value, then to different values. Press A or B on your keyboard to flip them. Then click the XOR gate to see its 12 transistors.",
     build:() => B().in("a", "A", 0, -20).in("b", "B", 0, 40).g("x", "XOR", 140, 6).g("xn", "XNOR", 140, 96)
       .out("q1", "A XOR B", 280, 10).out("q2", "A XNOR B", 280, 100)
       .w("a", 0, "x", 0).w("b", 0, "x", 1).w("a", 0, "xn", 0).w("b", 0, "xn", 1).w("x", 0, "q1", 0).w("xn", 0, "q2", 0).done() },
@@ -1000,7 +1171,7 @@ const starterBuild = () => B().in("a", "A", 0, 0).in("b", "B", 0, 100)
 /* ---------- app state ---------- */
 const app = $("#app");
 const board = new Board($("#board"));
-const state = { mode:"learn", lesson:0, lessonDoc:null, buildDoc:{circ:starterBuild(), undo:[], redo:[], vb:null}, editingName:"" };
+const state = { mode:"learn", lesson:0, lab:0, lessonDoc:null, buildDoc:{circ:starterBuild(), undo:[], redo:[], vb:null}, editingName:"" };
 
 function sanitizeCirc(c){
   if (!c || !Array.isArray(c.nodes) || !Array.isArray(c.wires)) return null;
@@ -1036,16 +1207,17 @@ function persist(){
     try {
       localStorage.setItem(KEY, JSON.stringify({
         chips:[...lib.values()].filter(d => !d.builtin).map(d => ({name:d.name, circuit:d.circuit})),
-        circuit:state.buildDoc.circ, mode:state.mode, lesson:state.lesson }));
+        circuit:state.buildDoc.circ, mode:state.mode, lesson:state.lesson, lab:state.lab }));
     } catch (_) {}
   }, 250);
 }
 function restore(){
   try {
-    const s = JSON.parse(localStorage.getItem(KEY) || "null"); if (!s) return;
+    const s = JSON.parse(localStorage.getItem(KEY) || "null"); if (!s){ state.firstVisit = true; return; }
     if (Array.isArray(s.chips)) addChipsInOrder(s.chips);
     const c = sanitizeCirc(s.circuit); if (c) state.buildDoc.circ = c;
-    if (s.mode === "build" || s.mode === "learn" || s.mode === "zoom") state.mode = s.mode;
+    if (["build", "learn", "zoom", "dev"].includes(s.mode)) state.mode = s.mode;
+    if (Number.isInteger(s.lab) && s.lab >= 0 && s.lab < 11) state.lab = s.lab;
     if (Number.isInteger(s.lesson) && s.lesson >= 0 && s.lesson < LESSONS.length) state.lesson = s.lesson;
   } catch (_) {}
 }
@@ -1076,6 +1248,7 @@ function partIcon(type, chip){
   }
   if (type === "IN") return `<svg width="44" height="26" viewBox="0 0 44 26" aria-hidden="true"><rect x="4" y="3" width="36" height="20" rx="10" fill="var(--signal)"/><circle cx="30" cy="13" r="8" fill="#fff"/></svg>`;
   if (type === "OUT") return `<svg width="44" height="26" viewBox="0 0 44 26" aria-hidden="true"><circle cx="22" cy="13" r="9" fill="var(--signal)" filter="url(#glow)"/></svg>`;
+  if (type === "HEX") return `<svg width="44" height="26" viewBox="0 0 44 26" aria-hidden="true"><rect x="10" y="0" width="24" height="26" rx="4" fill="#1A1D24"/><path d="M16 4h12M29 5v7M29 14v7M16 22h12M15 14v7M15 5v7M16 13h12" stroke="var(--signal)" stroke-width="2.2" stroke-linecap="round"/></svg>`;
   if (type === "CLOCK") return `<svg width="44" height="26" viewBox="0 0 44 26" aria-hidden="true"><rect x="4" y="3" width="36" height="20" rx="6" fill="var(--gate-fill)" stroke="var(--gate-stroke)" stroke-width="1.4"/><path d="M9 17h6v-8h7v8h7v-8h6" fill="none" stroke="var(--gate-stroke)" stroke-width="1.4"/></svg>`;
   const gb = gateBody(type);
   return `<svg width="48" height="28" viewBox="-6 -4 74 48" aria-hidden="true"><g class="gate" transform="translate(4,0)">${gb.svg}</g></svg>`;
@@ -1090,9 +1263,16 @@ function partHTML(type, name, sub, opts){
 function renderLeft(){
   const L = $("#left");
   if (state.mode === "zoom"){ Z.leftKey = ""; zLeft(); return; }
+  if (state.mode === "dev"){
+    const item = (l, i, label) => `<li><button data-lab="${i}" aria-current="${i === state.lab}"><span class="num">${label}</span><span><span class="t">${esc(l.t)}</span><span class="s">${esc(l.s)} ${l.tool ? "" : lvlTag(LAB_LVL[i])}</span></span></button></li>`;
+    L.innerHTML = `<h2 class="sec">Labs</h2><ol class="lessons">${LABS.map((l, i) => l.tool ? "" : item(l, i, i + 1)).join("")}</ol>
+      <h2 class="sec" style="margin-top:20px">Tools</h2><ol class="lessons">${LABS.map((l, i) => l.tool ? item(l, i, "#") : "").join("")}</ol>
+      <p class="note" style="margin-top:16px">Things every software engineer runs into, shown at the hardware level that causes them.</p>`;
+    return;
+  }
   if (state.mode === "learn"){
     L.innerHTML = `<h2 class="sec">Lessons</h2><ol class="lessons">${LESSONS.map((l, i) =>
-      `<li><button data-lesson="${i}" aria-current="${i === state.lesson}"><span class="num">${i + 1}</span><span><span class="t">${esc(l.t)}</span><span class="s">${esc(l.s)}</span></span></button></li>`).join("")}</ol>`;
+      `<li><button data-lesson="${i}" aria-current="${i === state.lesson}"><span class="num">${i + 1}</span><span><span class="t">${esc(l.t)}</span><span class="s">${esc(l.s)} ${lvlTag(LESSON_LVL[i])}</span></span></button></li>`).join("")}</ol>`;
     return;
   }
   const chips = [...lib.values()];
@@ -1104,6 +1284,7 @@ function renderLeft(){
       ${partHTML("IN", "Switch", "input bit", {title:"Click it on the board to flip between 0 and 1"})}
       ${partHTML("OUT", "Light", "output bit", {title:"Shows the bit wired into it"})}
       ${partHTML("CLOCK", "Clock", "ticks 0/1", {title:"Flips by itself about every 0.7 seconds"})}
+      ${partHTML("HEX", "Hex display", "4 bits → 0–F", {title:"Shows the 4 bits wired into it as one hex digit. Top pin is worth 1, bottom pin 8."})}
     </div>
     <h2 class="sec" style="margin-top:22px">Gates <span style="text-transform:none;letter-spacing:0;font-weight:500">· ≈ CMOS transistors</span></h2>
     <div class="palette">${Object.entries(GATES).map(([k, g]) => partHTML(k, k, `${g.t}T`, {title:g.d})).join("")}</div>
@@ -1115,6 +1296,7 @@ function renderLeft(){
 $("#left").addEventListener("click", e => {
   const lb = e.target.closest("[data-lesson]"); if (lb){ openLesson(+lb.dataset.lesson); return; }
   const zl = e.target.closest("[data-zl]"); if (zl){ zJump(+zl.dataset.zl); return; }
+  const lab = e.target.closest("[data-lab]"); if (lab){ openLab(+lab.dataset.lab); return; }
   const zb = e.target.closest("[data-zb]"); if (zb){ zBranch(zb.dataset.zb); return; }
   const del = e.target.closest("[data-del]"); if (del){ e.stopPropagation(); askDeleteChip(del.dataset.del); return; }
   const p = e.target.closest("[data-part]"); if (p) addPart(JSON.parse(p.dataset.part));
@@ -1196,11 +1378,12 @@ function renderInspector(){
   if (sel && sel.node){
     const n = board.sim.byId.get(sel.node); if (!n){ board.sel = null; return renderInspector(); }
     const named = n.type === "IN" || n.type === "OUT" || n.type === "CLOCK";
-    let title = {IN:"Switch", OUT:"Light", CLOCK:"Clock", CHIP:n.chip}[n.type] || n.type + " gate";
+    let title = {IN:"Switch", OUT:"Light", CLOCK:"Clock", HEX:"Hex display", CHIP:n.chip}[n.type] || n.type + " gate";
     let info = "";
     if (GATES[n.type]) info = `<p class="note">${esc(GATES[n.type].d)} About ${GATES[n.type].t} transistors in CMOS.</p>`;
     if (n.type === "IN") info = `<p class="note">Click it on the board to flip it. Switches become the chip's input pins, ordered top to bottom.</p>`;
     if (n.type === "OUT") info = `<p class="note">Lights become the chip's output pins, ordered top to bottom.</p>`;
+    if (n.type === "HEX") info = `<p class="note">Reads 4 bits as one hexadecimal digit, 0 to F. The top pin is worth 1, then 2, 4 and 8. Two of these side by side show a whole byte.</p>`;
     if (n.type === "CLOCK") info = `<p class="note">Flips between 0 and 1 by itself. Clocks can't be saved inside a chip.</p>`;
     if (n.type === "CHIP"){ const d = lib.get(n.chip);
       info = d ? `<dl class="pinlist"><dt>Inputs</dt><dd>${esc(d.io.ins.join(", "))}</dd><dt>Outputs</dt><dd>${esc(d.io.outs.join(", "))}</dd><dt>Inside</dt><dd>${gateCount(d.circuit)} gates · ≈${d.transistors}T</dd></dl>` : `<p class="err">This chip's definition is missing.</p>`; }
@@ -1208,7 +1391,7 @@ function renderInspector(){
       ${named ? `<label class="f" for="inspLabel">Name<input type="text" id="inspLabel" maxlength="10" value="${esc(n.label || "")}"></label>` : ""}
       ${info}
       <div class="row">${n.type === "CHIP" && lib.get(n.chip) ? `<button class="btn" id="lookInside">Look inside</button>` : ""}${TVDEF[n.type] ? `<button class="btn" id="seeT">See transistors</button>` : ""}<button class="btn danger" id="inspDel">Delete</button></div>
-      ${(n.type === "XOR" || n.type === "XNOR") ? `<p class="note">The transistor view for ${n.type} is planned for the next version.</p>` : ""}</div>`;
+</div>`;
     const st = $("#seeT"); if (st) st.addEventListener("click", () => openTVFor(n));
     const inp = $("#inspLabel");
     if (inp){
@@ -1234,7 +1417,7 @@ function renderInspector(){
       <li>Select a switch or light to rename it. Those names become the chip's pins.</li>
       <li>Click <b>Save as chip</b>. It appears in My chips, ready to use inside bigger circuits.</li>
     </ol>
-    <p class="keys"><kbd>Delete</kbd> removes the selection · <kbd>⌘/Ctrl Z</kbd> undo · scroll to zoom · drag the background to pan.</p>
+    <p class="keys">Press a switch's letter (<kbd>A</kbd>, <kbd>B</kbd>…) to flip it · <kbd>Delete</kbd> removes the selection · <kbd>⌘/Ctrl Z</kbd> undo · scroll to zoom · drag the background to pan.</p>
     <p class="note">The starter circuit is XOR built from four NAND gates. Try saving it as <b>MY XOR</b>.</p>`;
 }
 board.cb.structure = () => { persist(); if (state.mode === "build"){ const st = $("#stats"); if (st) st.textContent = statsText(); updateHistoryBtns(); } refreshValues(); };
@@ -1244,7 +1427,7 @@ board.cb.select = () => { if (state.mode === "build") renderInspector(); };
 /* ---------- lesson card ---------- */
 function renderLessonCard(){
   const L = LESSONS[state.lesson], i = state.lesson, last = i === LESSONS.length - 1;
-  $("#lessonCard").innerHTML = `<p class="eyebrow">Lesson ${i + 1} of ${LESSONS.length}</p><h1>${esc(L.t)}</h1>
+  $("#lessonCard").innerHTML = `<p class="eyebrow">Lesson ${i + 1} of ${LESSONS.length} ${lvlTag(LESSON_LVL[i])}</p><h1>${esc(L.t)}</h1>
     ${L.p.map(t => `<p>${esc(t)}</p>`).join("")}
     <div class="try"><b>Try this</b><span>${esc(L.tryit)}</span></div>
     <div class="lesson-nav">
@@ -1272,8 +1455,10 @@ function openLesson(i){
 /* ---------- mode ---------- */
 function setMode(m){
   state.mode = m; app.dataset.mode = m;
-  $("#modeLearn").setAttribute("aria-pressed", m === "learn"); $("#modeBuild").setAttribute("aria-pressed", m === "build"); $("#modeZoom").setAttribute("aria-pressed", m === "zoom");
+  $("#modeLearn").setAttribute("aria-pressed", m === "learn"); $("#modeBuild").setAttribute("aria-pressed", m === "build"); $("#modeZoom").setAttribute("aria-pressed", m === "zoom"); $("#modeDev").setAttribute("aria-pressed", m === "dev");
   if (m !== "zoom") zStop();
+  if (m !== "dev") devStop();
+  if (m === "dev"){ renderLeft(); renderDev(); persist(); return; }
   if (m === "learn"){ openLesson(state.lesson); return; }
   if (m === "zoom"){ renderLeft(); zEnter(); persist(); return; }
   renderLeft(); board.load(state.buildDoc, true); renderRight(); updateStatus(); updateHistoryBtns(); persist();
@@ -1281,6 +1466,7 @@ function setMode(m){
 $("#modeLearn").addEventListener("click", () => setMode("learn"));
 $("#modeBuild").addEventListener("click", () => setMode("build"));
 $("#modeZoom").addEventListener("click", () => setMode("zoom"));
+$("#modeDev").addEventListener("click", () => setMode("dev"));
 
 /* ---------- build actions ---------- */
 function updateHistoryBtns(){ $("#undoBtn").disabled = !state.buildDoc.undo.length; $("#redoBtn").disabled = !state.buildDoc.redo.length; }
@@ -1364,7 +1550,13 @@ document.addEventListener("keydown", e => {
   if (!$("#tv").hidden){ if (e.key === "Escape") closeTV(); return; }
   if (state.mode === "zoom"){ if (e.key === "Escape" && Z.stack.length > 1){ Z.stack.pop(); zRender(); } return; }
   const typing = /^(INPUT|TEXTAREA)$/.test(document.activeElement && document.activeElement.tagName);
-  if (typing || state.mode !== "build") return;
+  if (typing || state.mode === "dev") return;
+  if (!e.metaKey && !e.ctrlKey && !e.altKey && e.key.length === 1 && /[a-z0-9]/i.test(e.key)){
+    const k = e.key.toUpperCase();
+    const sw = board.circ.nodes.find(n => n.type === "IN" && String(n.label || "").toUpperCase() === k);
+    if (sw){ e.preventDefault(); board.toggle(sw); return; }
+  }
+  if (state.mode !== "build") return;
   if (e.key === "Delete" || e.key === "Backspace"){ if (board.sel){ e.preventDefault(); board.deleteSel(); } }
   else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "z"){ e.preventDefault(); board.history(e.shiftKey ? 1 : -1); }
   else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "y"){ e.preventDefault(); board.history(1); }
@@ -1416,8 +1608,39 @@ const TVDEF = (() => {
     AND:Object.assign(two(nand("X"), "NAND"), {
       note:"A single CMOS stage always inverts, so there's no direct AND. Chips build it as NAND followed by NOT, which is why AND costs 6 transistors and NAND only 4." }),
     OR:Object.assign(two(nor("X"), "NOR"), {
-      note:"Same trick as AND: a NOR stage followed by an inverter. 6 transistors, versus 4 for NOR on its own." })
+      note:"Same trick as AND: a NOR stage followed by an inverter. 6 transistors, versus 4 for NOR on its own." }),
+    XOR:xorDef(false),
+    XNOR:xorDef(true)
   };
+  function xorDef(xnor){
+    const b1 = xnor ? "Bn" : "B", b2 = xnor ? "B" : "Bn";
+    const tr = [
+      P("IAp", 150, 120, "A", "VDD", "An"), N("IAn", 150, 320, "A", "An", "GND"),
+      P("IBp", 270, 120, "B", "VDD", "Bn"), N("IBn", 270, 320, "B", "Bn", "GND"),
+      P("PA", 420, 96, "A", "VDD", "M1", 2), P("PB", 560, 96, b1, "VDD", "M1", 2),
+      P("PAn", 420, 186, "An", "M1", "Y", 2), P("PBn", 560, 186, b2, "M1", "Y", 2),
+      N("NA", 420, 290, "A", "Y", "M2", 2), N("NB", 420, 384, b1, "M2", "GND", 2),
+      N("NAn", 560, 290, "An", "Y", "M3", 2), N("NBn", 560, 384, b2, "M3", "GND", 2)
+    ];
+    const segs = [
+      ["VDD", [[150, 84], [150, 40]]], ["An", [[150, 156], [150, 284]]], ["An", [[150, 220], [200, 220]]], ["GND", [[150, 356], [150, 440]]],
+      ["VDD", [[270, 84], [270, 40]]], ["Bn", [[270, 156], [270, 284]]], ["Bn", [[270, 220], [320, 220]]], ["GND", [[270, 356], [270, 440]]],
+      ["VDD", [[420, 60], [420, 40]]], ["VDD", [[560, 60], [560, 40]]],
+      ["M1", [[420, 132], [420, 150]]], ["M1", [[560, 132], [560, 150]]], ["M1", [[420, 141], [560, 141]]],
+      ["Y", [[420, 222], [420, 240], [640, 240]]], ["Y", [[560, 222], [560, 240]]],
+      ["Y", [[420, 254], [420, 240]]], ["Y", [[560, 254], [560, 240]]],
+      ["M2", [[420, 326], [420, 348]]], ["M3", [[560, 326], [560, 348]]],
+      ["GND", [[420, 420], [420, 440]]], ["GND", [[560, 420], [560, 440]]]
+    ];
+    return { w:720, inputs:["A", "B"], rail:[110, 600], out:{x:640, y:240}, tr, segs,
+      alias:{An:"Ā", Bn:"B̄"},
+      labels:[{x:206, y:224, t:"Ā"}, {x:326, y:224, t:"B̄"}, {x:574, y:137, t:"M1"}],
+      stages:[{x:210, t:"Stage 1 · 2 × NOT"}, {x:490, t:`Stage 2 · ${xnor ? "XNOR" : "XOR"} network`}],
+      explain:r => `<b>Stage 1 makes the inverted inputs:</b> Ā = ${r.val.An}, B̄ = ${r.val.Bn}. ` + explainStage(TVDEF[xnor ? "XNOR" : "XOR"], r, 2, "Y", "Y"),
+      note: xnor
+        ? "XNOR is the XOR network with B and B̄ swapped: Y = 1 when the inputs match. The top network connects Y to VDD if (A or B̄) and (Ā or B); the bottom network connects it to GND if the inputs differ."
+        : "Y = 1 when the inputs differ. The top network is two parallel pairs in series: (A or B is 0) and (A or B is 1). The bottom network is two series pairs in parallel: A and B both 1, or both 0. Two inverters supply Ā and B̄, so this classic design uses 12 transistors. Compact transmission-gate versions use 6 to 8." };
+  }
 })();
 
 function solveTV(def, inputs){
@@ -1453,7 +1676,7 @@ function trSVG(t, on, val, zoomable){
   s += `<text class="tr-name" x="${x + 12}" y="${y - 4}">${p ? "pMOS" : "nMOS"}</text><text class="tr-st${on ? " on" : ""}" x="${x + 12}" y="${y + 12}">${on ? "ON" : "OFF"}</text>`;
   return s;
 }
-function trName(t){ return `${t.t}MOS ${t.g === "X" ? "(X)" : t.g}`; }
+function trName(t){ return `${t.t}MOS ${({X:"(X)", An:"Ā", Bn:"B̄", Q:"(Q)", Qn:"(Q̄)", WL:"(WL)"})[t.g] || t.g}`; }
 function listNames(a){ const n = a.map(trName); return n.length <= 1 ? (n[0] || "") : n.slice(0, -1).join(", ") + " and " + n[n.length - 1]; }
 function explainStage(def, r, stage, outNet, label){
   const trs = def.tr.map((t, i) => ({t, on:r.on[i]})).filter(o => o.t.stage === stage);
@@ -1473,7 +1696,8 @@ function tvMarkup(def, inputs, zoomable){
   const c = v => v === 1 ? "hi" : v === 0 ? "lo" : "fl";
   const outRoot = r.find("Y");
   const pathType = val.Y === 1 ? "p" : "n";
-  const pathTr = def.tr.map((t, i) => r.on[i] && t.t === pathType && r.find(t.top) === outRoot);
+  const outStage = Math.max(...def.tr.map(t => t.stage || 1));
+  const pathTr = def.tr.map((t, i) => r.on[i] && t.t === pathType && (t.stage || 1) === outStage && r.find(t.top) === outRoot);
   const pathNets = new Set(["Y"]); def.tr.forEach((t, i) => { if (pathTr[i]){ pathNets.add(t.top); pathNets.add(t.bot); } });
   const inPath = net => pathNets.has(net) && net !== "VDD" && net !== "GND";
   let glow = "", nets = "", trs = "", extra = "";
@@ -1482,7 +1706,7 @@ function tvMarkup(def, inputs, zoomable){
   nets += `<line class="net lo rail" x1="${def.rail[0]}" y1="440" x2="${def.rail[1]}" y2="440"/><text class="rail-lbl" x="${def.rail[0] - 10}" y="444" text-anchor="end">GND · 0</text>`;
   for (const [net, pts] of def.segs){
     const d = "M" + pts.map(p => p.join(",")).join(" L");
-    if (inPath(net) || ((net === "VDD" || net === "GND") && pathNets.has(net) && pts.some(p => def.tr.some((t, i) => pathTr[i] && t.x === p[0])))) glow += `<path class="glow" d="${d}"/>`;
+    if (inPath(net) || ((net === "VDD" || net === "GND") && pathNets.has(net) && pts.some(p => def.tr.some((t, i) => pathTr[i] && t.x === p[0] && (t.top === net || t.bot === net))))) glow += `<path class="glow" d="${d}"/>`;
     nets += `<path class="net ${c(val[net])}" d="${d}"/>`;
   }
   def.tr.forEach((t, i) => {
@@ -1490,6 +1714,8 @@ function tvMarkup(def, inputs, zoomable){
     trs += trSVG(t, r.on[i], val, zoomable);
     if (def.inputs.includes(t.g)){
       extra += `<g class="tv-in" data-tvin="${t.g}"><circle class="in-dot ${c(val[t.g])}" cx="${t.x - 48}" cy="${t.y}" r="8"/><text class="in-lbl" x="${t.x - 62}" y="${t.y + 5}" text-anchor="end">${t.g}</text></g>`;
+    } else if (def.alias && def.alias[t.g]){
+      extra += `<circle class="in-dot ${c(val[t.g])}" cx="${t.x - 48}" cy="${t.y}" r="6"/><text class="in-lbl" x="${t.x - 58}" y="${t.y + 5}" text-anchor="end" style="font-size:13px">${def.alias[t.g]}</text>`;
     }
   });
   (def.labels || []).forEach(l => { extra += `<text class="net-lbl" x="${l.x}" y="${l.y}">${l.t}</text>`; });
@@ -1506,12 +1732,13 @@ function renderTV(){
   svg.innerHTML = m.inner;
 
   $("#tvTitle").textContent = `Inside the ${tv.type} gate`;
-  $("#tvSeg").innerHTML = ["NOT", "NAND", "NOR", "AND", "OR"].map(k => `<button data-tvgate="${k}" aria-pressed="${k === tv.type}">${k}</button>`).join("") +
-    `<button disabled title="Planned for the next version">XOR</button>`;
+  $("#tvSeg").innerHTML = ["NOT", "NAND", "NOR", "AND", "OR", "XOR", "XNOR"].map(k => `<button data-tvgate="${k}" aria-pressed="${k === tv.type}">${k}</button>`).join("");
 
   // explanation
   let ex = "";
-  if (def.stages){
+  if (def.explain){
+    ex = `<p class="explain">${def.explain(r)}</p>`;
+  } else if (def.stages){
     ex = `<p class="explain">${explainStage(def, r, 1, "X", "X")}</p>
       <p class="explain"><b>Stage 2 inverts it.</b> ${explainStage(def, r, 2, "Y", "Y")}</p>`;
   } else ex = `<p class="explain">${explainStage(def, r, 1, "Y", "Y")}</p>`;
@@ -1545,7 +1772,7 @@ function renderTV(){
     <p class="insight"><b>Why CMOS won:</b> the pMOS network on top and the nMOS network below are mirror images. For every input, exactly one of them connects the output, so there's never a direct path from power to ground. An idle CMOS gate uses almost no power, which is how billions of them fit on one chip.</p>`;
 }
 function openTV(type, inputs){
-  if (!TVDEF[type]){ toast(`The transistor view for ${type} is planned for the next version. NOT, AND, OR, NAND and NOR are ready.`); return; }
+  if (!TVDEF[type]){ toast(`There's no transistor view for ${type}.`); return; }
   tv.type = type; tv.inputs = Object.assign({A:0, B:0}, inputs || {});
   $("#tv").hidden = false; renderTV(); $("#tvClose").focus();
 }
@@ -1576,11 +1803,38 @@ const LV = {
   lane:{t:"One lane", s:"registers + a tiny ALU"},
   mul:{t:"4-bit multiplier", s:"≈ 960 transistors"},
   npu:{t:"NPU", s:"4 × 4 grid of multiply-adders"},
+  cache:{t:"L3 cache", s:"8 banks of SRAM"},
+  sram:{t:"SRAM array", s:"16 words × 8 bits = 128 cells"},
+  cell:{t:"6T SRAM cell", s:"6 transistors · stores 1 bit"},
+  race:{t:"Race", s:"CPU vs GPU vs NPU, same job"},
   pe:{t:"Processing element", s:"multiply + add + register"}
 };
 const NEXT = {core:{t:"adder"}, adder:{t:"fa", bit:0}, fa:{t:"nand", gate:"n1"}, nand:{t:"tr", id:"NA"},
   gpu:{t:"sm", k:0}, sm:{t:"lane", lane:5}, lane:{t:"mul"}, mul:{t:"fa", row:1, bit:2}, npu:{t:"pe", i:1, j:2}, pe:{t:"mul"}};
-const BRANCH_FIRST = {cpu:{t:"core"}, gpu:{t:"gpu"}, npu:{t:"npu"}};
+const BRANCH_FIRST = {cpu:{t:"core"}, gpu:{t:"gpu"}, npu:{t:"npu"}, cache:{t:"cache"}, race:{t:"race"}};
+NEXT.cache = {t:"sram"}; NEXT.sram = {t:"cell", r:0, i:0}; NEXT.cell = {t:"tr", id:"AC1"};
+const CELL_TR = [
+  {id:"AC1", t:"n", x:200, y:150, g:"WL", top:"BL", bot:"Q", name:"access 1"},
+  {id:"AC2", t:"n", x:600, y:150, g:"WL", top:"BLn", bot:"Qn", name:"access 2"},
+  {id:"PU1", t:"p", x:330, y:150, g:"Qn", top:"VDD", bot:"Q", name:"pull-up 1"},
+  {id:"PD1", t:"n", x:330, y:330, g:"Qn", top:"Q", bot:"GND", name:"pull-down 1"},
+  {id:"PU2", t:"p", x:470, y:150, g:"Q", top:"VDD", bot:"Qn", name:"pull-up 2"},
+  {id:"PD2", t:"n", x:470, y:330, g:"Q", top:"Qn", bot:"GND", name:"pull-down 2"}
+];
+const NET_NICE = {Qn:"Q̄", BLn:"BL̄", An:"Ā", Bn:"B̄"};
+const xAt = t => t < 0 ? 0 : (42 + 3 * t) & 255;
+const writeRow = () => Z.tick % 16;
+function memRow(r){ const t = Z.tick - (((Z.tick - r) % 16) + 16) % 16; return t < 0 ? 0 : xAt(t); }
+function cellVals(f){
+  const bl = (Z.x >> f.i) & 1, q = (memRow(f.r) >> f.i) & 1;
+  return {VDD:1, GND:0, WL:f.r === writeRow() ? 1 : 0, BL:bl, BLn:bl ? 0 : 1, Q:q, Qn:q ? 0 : 1};
+}
+function trCtx(idx){
+  const f = Z.stack[idx], p = Z.stack[idx - 1];
+  if (p.t === "cell") return {t:CELL_TR.find(o => o.id === f.id) || CELL_TR[0], val:cellVals(p)};
+  const r = solveTV(TVDEF.NAND, opsAt(idx - 1));
+  return {t:TVDEF.NAND.tr.find(o => o.id === f.id) || TVDEF.NAND.tr[0], val:r.val};
+}
 const Z = {stack:[{t:"die"}], branch:"cpu", x:42, B:3, playing:true, speed:1, tick:0, prev:null, ripple:8, tmr:0, rt:0, last:"", die:"", anim:false, leftKey:""};
 const reduceMotion = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const bin8 = v => v.toString(2).padStart(8, "0");
@@ -1619,7 +1873,7 @@ function peState(i, j, n){
   const final = [0, 1, 2, 3].reduce((t, q) => t + n.A[i][q] * n.W[q][j], 0);
   return {k, kk, active:k >= 0 && k < 4, waiting:k < 0, done:k >= 4, a, w, prod, before, after:before + prod, final, n};
 }
-function branchOf(){ const f = Z.stack[1]; return f ? ({core:"cpu", gpu:"gpu", npu:"npu"})[f.t] : Z.branch; }
+function branchOf(){ const f = Z.stack[1]; return f ? ({core:"cpu", gpu:"gpu", npu:"npu", cache:"cache", race:"race"})[f.t] : Z.branch; }
 
 /* operands for the frame at stack index idx */
 function opsAt(idx){
@@ -1663,13 +1917,18 @@ function chain(){
   return c;
 }
 function zJump(i){ const c = chain(); Z.stack = (i < Z.stack.length ? Z.stack : c).slice(0, i + 1); zRender(); }
-function zBranch(k){ Z.branch = k; Z.stack = [{t:"die"}, Object.assign({}, BRANCH_FIRST[k])]; zRender(); }
+function zBranch(k){
+  Z.branch = k; Z.stack = [{t:"die"}, Object.assign({}, BRANCH_FIRST[k])];
+  if (k === "race"){ Z.raceStart = Z.tick; if (Z.speed < 4){ Z.speed = 4; zLoop(); } }
+  zRender();
+}
 function frameLabel(f){
   switch (f.t){
     case "die": return "Chip"; case "core": return "Core 0"; case "adder": return "Adder";
     case "fa": return f.row ? `Row ${f.row} · bit ${f.bit}` : `Bit ${f.bit}`;
     case "nand": return `Gate G${f.gate.slice(1)}`;
-    case "tr": return `${f.id[0] === "P" ? "pMOS" : "nMOS"} ${f.id[1]}`;
+    case "tr": { const c = CELL_TR.find(o => o.id === f.id); return c ? `${c.t}MOS ${c.name}` : `${f.id[0] === "P" ? "pMOS" : "nMOS"} ${f.id[1]}`; }
+    case "cache": return "L3 cache"; case "sram": return "Bank 0"; case "cell": return `Row ${f.r} · bit ${f.i}`; case "race": return "Race";
     case "gpu": return "GPU"; case "sm": return `Cluster ${f.k}`; case "lane": return `Lane ${f.lane}`;
     case "mul": return "Multiplier"; case "npu": return "NPU"; case "pe": return `PE ${f.i},${f.j}`;
   }
@@ -1679,10 +1938,11 @@ function zLeft(){
   const ch = chain(), n = Z.stack.length;
   const key = JSON.stringify([ch, n, Z.branch]); if (key === Z.leftKey) return; Z.leftKey = key;
   $("#left").innerHTML = `<h2 class="sec">Follow</h2>
-    <div class="seg" role="group" aria-label="Zoom path">${[["cpu", "CPU core"], ["gpu", "GPU"], ["npu", "NPU"]].map(([k, l]) => `<button data-zb="${k}" aria-pressed="${branchOf() === k}">${l}</button>`).join("")}</div>
+    <div class="seg small" role="group" aria-label="Zoom path">${[["cpu", "CPU"], ["gpu", "GPU"], ["npu", "NPU"], ["cache", "Cache"]].map(([k, l]) => `<button data-zb="${k}" aria-pressed="${branchOf() === k}">${l}</button>`).join("")}</div>
+    <button class="btn${branchOf() === "race" ? " primary" : ""}" data-zb="race" style="margin-top:10px;width:100%;justify-content:center">Race: CPU vs GPU vs NPU</button>
     <h2 class="sec" style="margin-top:22px">Zoom levels</h2>
-    <ol class="ladder">${ch.map((f, i) => `<li><button data-zl="${i}" aria-current="${i === n - 1}"><span class="dot"></span><span><span class="t">${esc(i === 0 ? "Chip" : LV[f.t].t)}</span><span class="s">${esc(LV[f.t].s)}</span></span></button></li>`).join("")}</ol>
-    <p class="note" style="margin-top:16px">Every path ends at the same NAND gates and transistors. A CPU, a GPU and an NPU differ only in how those are arranged.</p>`;
+    <ol class="ladder">${ch.map((f, i) => `<li><button data-zl="${i}" aria-current="${i === n - 1}"><span class="dot"></span><span><span class="t">${esc(i === 0 ? "Chip" : LV[f.t].t)}</span><span class="s">${esc(LV[f.t].s)} ${lvlTag(ZOOM_LVL[f.t])}</span></span></button></li>`).join("")}</ol>
+    <p class="note" style="margin-top:16px">Every path ends at the same transistors. A CPU, a GPU, an NPU and a cache differ only in how those are arranged.</p>`;
 }
 
 /* ---------- views ---------- */
@@ -1705,8 +1965,9 @@ function zDie(){
     for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) s += cell(gx + 6 + c * 12.5, gy + 8 + r * 14.5, 9, 10, k < 8 && Math.random() < 0.8, false, 0.3, 1.1);
   }
   s += `<rect class="ring" x="389" y="29" width="382" height="274" rx="9"/></g>`;
-  s += `<rect class="blk" x="34" y="316" width="440" height="110" rx="6"/><text class="blk-lbl big" x="46" y="338">L3 CACHE · SRAM</text>`;
+  s += `<g class="ztarget" data-z="cache"><rect class="blk hotb" x="34" y="316" width="440" height="110" rx="6"/><text class="blk-lbl big" x="46" y="338">L3 CACHE · SRAM</text>`;
   for (let r = 0; r < 6; r++) for (let c = 0; c < 34; c++) s += cell(44 + c * 12.6, 348 + r * 12.4, 10, 9, Math.random() < 0.08, false, 1, 3);
+  s += `<rect class="ring" x="29" y="311" width="450" height="120" rx="9"/></g>`;
   s += `<g class="ztarget" data-z="npu"><rect class="blk hotb" x="492" y="316" width="274" height="110" rx="6"/><text class="blk-lbl big" x="504" y="338">NPU · AI ENGINE</text>`;
   for (let r = 0; r < 5; r++) for (let c = 0; c < 18; c++) s += cell(502 + c * 14.2, 348 + r * 14.6, 11, 11, Math.random() < 0.7, false, 0.25, 0.8);
   s += `<rect class="ring" x="487" y="311" width="284" height="120" rx="9"/></g>`;
@@ -1766,9 +2027,8 @@ function zFAView(st, gate){
   const b = circBBox(c), pad = 24;
   return {svg:s, vb:`${b.x - pad} ${b.y - pad} ${b.w + pad * 2} ${b.h + pad * 2}`};
 }
-function zTransistor(ins, id){
-  const def = TVDEF.NAND, t = def.tr.find(o => o.id === id) || def.tr[0];
-  const r = solveTV(def, ins); const g = ins[t.g];
+function zTransistor(t, val){
+  const r = {val}; const g = val[t.g];
   const n = t.t === "n", on = n ? g === 1 : g === 0;
   const sub = n ? "p" : "n", well = n ? "n" : "p", car = n ? "e" : "h";
   const srcNet = n ? t.bot : t.top, drnNet = n ? t.top : t.bot;
@@ -1779,9 +2039,9 @@ function zTransistor(ins, id){
   if (on) s += `<rect class="chanl" x="228" y="200" width="184" height="14"/>`;
   s += `<rect class="oxide" x="230" y="188" width="180" height="12"/>`;
   s += `<rect class="metal ${c(g)}" x="230" y="120" width="180" height="68" rx="4"/><text class="xs-lbl" x="320" y="159" text-anchor="middle" style="fill:${g ? "#3a2200" : "#fff"}">GATE</text>`;
-  s += `<path class="net ${c(g)}" d="M320,120 V64"/><text class="xs-lbl" x="320" y="52" text-anchor="middle">Gate = ${g} (input ${t.g})</text>`;
-  s += `<path class="net ${c(r.val[srcNet])}" d="M150,200 V64"/><text class="xs-lbl" x="150" y="40" text-anchor="middle">Source</text><text class="xs-sub" x="150" y="56" text-anchor="middle">${srcNet} = ${vs(r.val[srcNet])}</text>`;
-  s += `<path class="net ${c(r.val[drnNet])}" d="M490,200 V64"/><text class="xs-lbl" x="490" y="40" text-anchor="middle">Drain</text><text class="xs-sub" x="490" y="56" text-anchor="middle">${drnNet} = ${vs(r.val[drnNet])}</text>`;
+  s += `<path class="net ${c(g)}" d="M320,120 V64"/><text class="xs-lbl" x="320" y="52" text-anchor="middle">Gate = ${g} (${t.g === "A" || t.g === "B" ? "input " + t.g : NET_NICE[t.g] || t.g})</text>`;
+  s += `<path class="net ${c(r.val[srcNet])}" d="M150,200 V64"/><text class="xs-lbl" x="150" y="40" text-anchor="middle">Source</text><text class="xs-sub" x="150" y="56" text-anchor="middle">${NET_NICE[srcNet] || srcNet} = ${vs(r.val[srcNet])}</text>`;
+  s += `<path class="net ${c(r.val[drnNet])}" d="M490,200 V64"/><text class="xs-lbl" x="490" y="40" text-anchor="middle">Drain</text><text class="xs-sub" x="490" y="56" text-anchor="middle">${NET_NICE[drnNet] || drnNet} = ${vs(r.val[drnNet])}</text>`;
   s += `<text class="xs-lbl" x="150" y="264" text-anchor="middle">${well}+</text><text class="xs-lbl" x="490" y="264" text-anchor="middle">${well}+</text>`;
   s += `<text class="xs-sub" x="320" y="370" text-anchor="middle">${sub}-type silicon</text><text class="xs-sub" x="420" y="176">oxide: insulator</text>`;
   const dot = (x, y, extra, st) => `<circle class="${car}${extra}" cx="${x}" cy="${y}" r="4.5"${st || ""}/>`;
@@ -1793,6 +2053,109 @@ function zTransistor(ins, id){
   } else s += `<text class="xs-lbl" x="320" y="246" text-anchor="middle">no channel: switch OFF</text>`;
   s += `<text class="xs-sub" x="320" y="418" text-anchor="middle">${car === "e" ? "● electrons" : "○ holes"} carry the current · ${n ? "nMOS: ON when gate = 1" : "pMOS: ON when gate = 0"}</text>`;
   return {svg:s, g, on, n};
+}
+
+/* L3 cache */
+function zCache(){
+  const wr = writeRow(), rnd = prng(11);
+  let s = ZDEFS + `<text class="stage-lbl" x="24" y="30">L3 cache · 8 banks · Core 0 stores x = ${Z.x} in bank 0 this tick</text>`;
+  for (let b = 0; b < 8; b++){
+    const x = 24 + (b % 4) * 206, y = 48 + Math.floor(b / 4) * 196, me = b === 0;
+    let cells = "";
+    for (let r = 0; r < 16; r++){
+      const val = me ? memRow(r) : Math.floor(rnd() * 256);
+      for (let i = 0; i < 8; i++){
+        const bit = (val >> (7 - i)) & 1;
+        cells += `<rect x="${x + 16 + i * 20}" y="${y + 40 + r * 8}" width="16" height="6" rx="1.5" fill="${bit ? "var(--signal)" : "var(--off)"}" fill-opacity="${bit ? (me ? .9 : .45) : .3}"/>`;
+      }
+      if (me && r === wr) cells += `<rect x="${x + 12}" y="${y + 38 + r * 8}" width="164" height="10" rx="3" fill="none" stroke="var(--accent)" stroke-width="1.6"/>`;
+    }
+    s += `<g${me ? ' class="ztarget" data-z="sram"' : ""}><rect class="st${me ? " act2" : ""}" x="${x}" y="${y}" width="190" height="178" rx="12"/><text class="st-t" x="${x + 14}" y="${y + 26}">Bank ${b}</text><text class="st-s" x="${x + 70}" y="${y + 26}">${me ? "Core 0 · writing" : "other data"}</text>${cells}${me ? `<rect class="ring" x="${x - 5}" y="${y - 5}" width="200" height="188" rx="15"/>` : ""}</g>`;
+  }
+  s += `<text class="st-s" x="24" y="455">Each bank is a grid of SRAM cells: 16 rows × 8 bits here. Real L3 caches hold tens of millions of cells.</text>`;
+  return s;
+}
+function zSRAM(){
+  const wr = writeRow(), x0 = 190, y0 = 84, cw = 58, rh = 29;
+  let s = ZDEFS + `<text class="stage-lbl" x="20" y="26">Bank 0 · 16 words × 8 bits · writing x = ${Z.x} into row ${wr}</text>`;
+  for (let i = 0; i < 8; i++){
+    const cx = x0 + (7 - i) * cw + cw / 2, b = (Z.x >> i) & 1;
+    s += `<line class="net ${b ? "hi" : "lo"}" x1="${cx - 24}" y1="${y0 - 18}" x2="${cx - 24}" y2="${y0 + 16 * rh}" style="stroke-width:2"/><text class="st-s" x="${cx}" y="${y0 - 24}" text-anchor="middle">BL${i} = ${b}</text>`;
+  }
+  for (let r = 0; r < 16; r++){
+    const y = y0 + r * rh, act = r === wr, val = memRow(r);
+    if (act) s += `<rect x="${x0 - 8}" y="${y - 1}" width="${8 * cw + 12}" height="${rh}" rx="6" fill="var(--accent-a)" stroke="var(--accent)"/><text class="st-s hl" x="${x0 - 150}" y="${y + 18}">WL on →</text>`;
+    s += `<text class="st-s" x="${x0 - 36}" y="${y + 18}" text-anchor="end">0x${r.toString(16).toUpperCase()}</text>`;
+    for (let i = 0; i < 8; i++){
+      const cx = x0 + (7 - i) * cw + cw / 2, bit = (val >> i) & 1;
+      s += `<g class="ztarget" data-z="cell:${r}:${i}"><rect x="${cx - 18}" y="${y + 3}" width="38" height="${rh - 7}" rx="5" fill="${bit ? "var(--signal-a)" : "var(--surface)"}" stroke="var(--line)"/><text class="bt" x="${cx + 1}" y="${y + 19}" style="fill:${bit ? "var(--signal-ink)" : "var(--muted)"}">${bit}</text></g>`;
+    }
+    s += `<text class="st-s${act ? " hl" : ""}" x="${x0 + 8 * cw + 14}" y="${y + 18}">= ${val}</text>`;
+  }
+  return s;
+}
+function zCell(f){
+  const v = cellVals(f), c = x => x === 1 ? "hi" : x === 0 ? "lo" : "fl";
+  const seg = (net, pts, extra) => `<path class="net ${c(v[net])}${extra || ""}" d="M${pts.map(p => p.join(",")).join(" L")}"/>`;
+  let glow = "", s = ZDEFS;
+  if (v.WL){ glow += `<path class="glow" d="M80,96 L200,96 L200,240 L330,240"/><path class="glow" d="M680,96 L600,96 L600,240 L470,240"/>`; }
+  else { glow += `<path class="glow" d="M330,186 L330,294 M330,260 L390,260 L390,150 L422,150 M390,330 L422,330 M470,186 L470,294 M470,270 L440,270 L440,390 L270,390 L270,150 L282,150 M270,330 L282,330"/>`; }
+  s += glow;
+  s += seg("WL", [[60, 50], [700, 50]], " rail") + `<text class="rail-lbl" x="60" y="34">WORD LINE (row ${f.r}) = ${v.WL}</text>`;
+  s += seg("WL", [[152, 50], [152, 150]]) + seg("WL", [[552, 50], [552, 150]]);
+  s += seg("BL", [[80, 70], [80, 460]], " rail") + seg("BLn", [[680, 70], [680, 460]], " rail");
+  s += `<text class="rail-lbl" x="80" y="484" text-anchor="middle">BL = ${v.BL}</text><text class="rail-lbl" x="680" y="484" text-anchor="middle">BL̄ = ${v.BLn}</text>`;
+  s += seg("BL", [[200, 114], [200, 96], [80, 96]]) + seg("BLn", [[600, 114], [600, 96], [680, 96]]);
+  s += seg("VDD", [[300, 90], [500, 90]], " rail") + `<text class="rail-lbl" x="506" y="94">VDD</text>` + seg("VDD", [[330, 114], [330, 90]]) + seg("VDD", [[470, 114], [470, 90]]);
+  s += seg("GND", [[300, 420], [500, 420]], " rail") + `<text class="rail-lbl" x="506" y="424">GND</text>` + seg("GND", [[330, 366], [330, 420]]) + seg("GND", [[470, 366], [470, 420]]);
+  s += seg("Q", [[200, 186], [200, 240], [330, 240]]) + seg("Q", [[330, 186], [330, 294]]);
+  s += seg("Q", [[330, 260], [390, 260]]) + seg("Q", [[390, 150], [390, 330]]) + seg("Q", [[390, 150], [422, 150]]) + seg("Q", [[390, 330], [422, 330]]);
+  s += seg("Qn", [[470, 186], [470, 294]]) + seg("Qn", [[470, 240], [600, 240], [600, 186]]);
+  s += seg("Qn", [[470, 270], [440, 270], [440, 390], [270, 390], [270, 150]]) + seg("Qn", [[270, 150], [282, 150]]) + seg("Qn", [[270, 330], [282, 330]]);
+  CELL_TR.forEach(t => { const g = v[t.g]; const on = t.t === "n" ? g === 1 : g === 0; s += trSVG(t, on, v, true); });
+  s += `<text class="in-lbl" x="214" y="232">Q = ${v.Q}</text><text class="in-lbl" x="500" y="232">Q̄ = ${v.Qn}</text>`;
+  s += `<text class="stage-lbl" x="380" y="470" text-anchor="middle">${v.WL ? "writing: bit lines drive the cell" : "holding: two inverters keep each other stable"}</text>`;
+  return s;
+}
+
+/* race: same matrix multiply on three designs */
+function raceState(){
+  if (Z.raceStart == null) Z.raceStart = Z.tick;
+  const total = 72, e = Math.max(0, Z.tick - Z.raceStart), run = Math.floor(e / total), s = e % total;
+  const rnd = prng(run + 101), M = () => [0, 1, 2, 3].map(() => [0, 1, 2, 3].map(() => Math.floor(rnd() * 4)));
+  const A = M(), W = M();
+  const part = (i, j, kd) => { let t = 0; for (let k = 0; k < kd; k++) t += A[i][k] * W[k][j]; return t; };
+  const cm = Math.min(s, 64), cur = cm < 64 ? Math.floor(cm / 4) : -1;
+  const cpu = {ticks:cm, reads:2 * cm, done:cm >= 64, total:64, cell:(i, j) => { const e2 = i * 4 + j, kd = Math.max(0, Math.min(4, cm - e2 * 4)); return {kd, v:part(i, j, kd), act:e2 === cur}; }};
+  const g = Math.min(s, 4);
+  const gpu = {ticks:g, reads:32 * g, done:g >= 4, total:4, cell:(i, j) => ({kd:g, v:part(i, j, g), act:g < 4})};
+  const ns = Math.min(s, 10); let entered = 0; for (let i = 0; i < 4; i++) for (let k = 0; k < 4; k++) if (i + k < ns) entered++;
+  const npu = {ticks:ns, reads:2 * entered, done:ns >= 10, total:10, cell:(i, j) => { const raw = ns - i - j, kd = Math.max(0, Math.min(4, raw)); return {kd, v:part(i, j, kd), act:raw >= 1 && raw <= 4 && ns < 10}; }};
+  return {s, run, A, W, cpu, gpu, npu};
+}
+function zRace(){
+  const R = raceState();
+  const cols = [["cpu", "CPU core", "1 multiplier · one multiply-add per tick", "3rd"], ["gpu", "GPU cluster", "16 lanes · each lane owns one output", "1st · fastest"], ["npu", "NPU systolic array", "16 PEs · data flows through the grid", "2nd · fewest reads"]];
+  let s = "";
+  cols.forEach(([k, title, sub, place], c) => {
+    const st = R[k], x0 = 20 + c * 316;
+    s += `<rect class="st${st.done ? "" : " act2"}" x="${x0}" y="16" width="300" height="470" rx="16"/>`;
+    s += `<text class="st-t" x="${x0 + 18}" y="46" style="font-size:16px">${title}</text><text class="st-s" x="${x0 + 18}" y="66">${sub}</text>`;
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++){
+      const ce = st.cell(i, j), x = x0 + 22 + j * 66, y = 86 + i * 50;
+      const fill = ce.kd === 4 ? "var(--signal-a)" : ce.kd > 0 ? "var(--accent-a)" : "var(--surface)";
+      s += `<rect x="${x}" y="${y}" width="58" height="42" rx="8" fill="${fill}" stroke="${ce.act ? "var(--accent)" : "var(--line)"}" stroke-width="${ce.act ? 2.2 : 1}"/>`;
+      s += `<text class="bt" x="${x + 29}" y="${y + 20}" style="fill:${ce.kd === 4 ? "var(--signal-ink)" : "var(--ink)"}">${ce.kd ? ce.v : "·"}</text><text class="st-s" x="${x + 29}" y="${y + 35}" text-anchor="middle" style="font-size:9.5px">${ce.kd}/4</text>`;
+    }
+    const prog = Math.min(1, st.ticks / st.total);
+    s += `<rect x="${x0 + 18}" y="300" width="264" height="10" rx="5" fill="var(--seg)"/><rect x="${x0 + 18}" y="300" width="${(264 * prog).toFixed(1)}" height="10" rx="5" fill="${st.done ? "var(--conduct)" : "var(--accent)"}"/>`;
+    s += `<text class="st-t" x="${x0 + 18}" y="342">Ticks: ${st.ticks}</text><text class="st-t" x="${x0 + 160}" y="342">Reads: ${st.reads}</text>`;
+    s += `<text class="st-s" x="${x0 + 18}" y="366">Each cell: n/4 multiply-adds done</text>`;
+    s += st.done ? `<text class="st-t" x="${x0 + 18}" y="410" style="fill:var(--conduct)">✓ Done in ${st.total} ticks</text><text class="st-s hl" x="${x0 + 18}" y="436">${place}</text>`
+      : `<text class="st-s" x="${x0 + 18}" y="410">working…</text>`;
+  });
+  s += `<text class="st-s" x="20" y="510">Race ${R.run + 1}: C = A × W with 4 × 4 matrices (values 0–3), 64 multiply-adds for every design. A new race starts after the CPU finishes.</text>`;
+  return s;
 }
 
 /* GPU */
@@ -1921,7 +2284,11 @@ function zRender(){
     case "adder": out = {vb:"0 0 930 390", svg:zAdder(opsAt(idx)), hint:"Each box is a full adder for one bit. Click any of them to zoom in."}; break;
     case "fa": { const v = zFAView(opsAt(idx), null); out = {vb:v.vb, svg:v.svg, hint:"9 NAND gates make one full adder. Click any gate to see its transistors."}; break; }
     case "nand": out = {vb:"0 0 560 490", svg:tvMarkup(TVDEF.NAND, opsAt(idx), true).inner, hint:`Gate G${f.gate.slice(1)}: 4 transistors. Click any transistor to look inside it.`}; break;
-    case "tr": out = {vb:"0 0 640 430", svg:zTransistor(opsAt(idx), f.id).svg, hint:"A cross-section of one transistor, cut through the middle."}; break;
+    case "tr": { const x = trCtx(idx); out = {vb:"0 0 640 430", svg:zTransistor(x.t, x.val).svg, hint:"A cross-section of one transistor, cut through the middle."}; break; }
+    case "cache": out = {vb:"0 0 860 470", svg:zCache(), hint:"Bank 0 holds Core 0's data. Click it to zoom in."}; break;
+    case "sram": out = {vb:"0 0 760 560", svg:zSRAM(), hint:"The highlighted row is being written this tick. Click any cell to see its 6 transistors."}; break;
+    case "cell": out = {vb:"0 0 760 500", svg:zCell(f), hint:"Click any transistor to look inside it."}; break;
+    case "race": out = {vb:"0 0 960 520", svg:zRace(), hint:"Same job, three designs. Watch the ticks and the memory reads."}; break;
     case "gpu": out = {vb:"0 0 920 440", svg:zGPU(), hint:"Every busy cluster shades 32 pixels at once. Click a cluster to zoom in."}; break;
     case "sm": out = {vb:"0 0 900 520", svg:zSM(f.k), hint:"32 lanes, one instruction, 32 different pixels. Click a lane to zoom in."}; break;
     case "lane": out = {vb:"0 0 880 380", svg:zLane(Z.stack[idx - 1].k, f.lane), hint:"Click the multiplier to see how it multiplies."}; break;
@@ -1941,6 +2308,8 @@ function liveHTML(){
   const b = branchOf();
   if (b === "gpu") return `<div class="bignum">frame ${Z.tick}</div><div class="bits">pixel = a × b · <b>256 pixels</b> per tick</div>`;
   if (b === "npu"){ const n = npuJob(); return `<div class="bignum">C = A × W</div><div class="bits">job ${n.job} · step <b>${n.step + 1}</b> of 10</div>`; }
+  if (b === "cache") return `<div class="bignum">x = ${Z.x}</div><div class="bits">${bin8(Z.x)} → stored in row <b>${writeRow()}</b> of bank 0</div>`;
+  if (b === "race"){ const R = raceState(); return `<div class="bignum">tick ${Math.min(R.s, 64)}</div><div class="bits">race ${R.run + 1} · <b>64</b> multiply-adds each</div>`; }
   const cur = addState(Z.x, Z.B);
   return `<div class="bignum">x = ${Z.x}</div><div class="bits">${bin8(Z.x)} + 00000011 = <b>${bin8(cur.S)}</b></div>`;
 }
@@ -1986,11 +2355,42 @@ function zSide(){
       break;
     }
     case "tr": {
-      const x = zTransistor(opsAt(idx), f.id);
+      const cx = trCtx(idx), x = zTransistor(cx.t, cx.val);
       title = `${x.n ? "nMOS" : "pMOS"} transistor`; facts = [["Features", "a few nanometres"], ["Switches", "up to billions of times a second"]];
       now = x.on ? `Gate = ${x.g}. ${x.n ? "A 1 on the gate pulls electrons" : "A 0 on the gate pulls holes"} into a thin channel under the oxide, connecting source to drain. <b>The switch is ON.</b>`
         : `Gate = ${x.g}. No channel forms, so source and drain stay disconnected. <b>The switch is OFF.</b>`;
       idea = P("This is the whole trick. A voltage on the gate, insulated by an oxide layer only a few atoms thick, opens or closes a path for current. CPU, GPU and NPU are all billions of these switches.");
+      break;
+    }
+    case "cache":
+      title = "L3 cache"; facts = [["Banks here", "8"], ["Real L3 size", "megabytes"], ["Cells", "tens of millions"]];
+      now = `Every tick Core 0 stores <b>x = ${Z.x}</b> into bank 0, row ${writeRow()}. The other banks hold data for other cores and the GPU.`;
+      idea = P("A cache keeps recently used data close to the cores, because fetching from main memory takes hundreds of ticks.") +
+        P("On many chips the caches take up a large share of the die. They're built from millions of identical SRAM cells: the most repeated pattern on the chip.");
+      break;
+    case "sram":
+      title = "SRAM array · bank 0"; facts = [["Size here", "16 words × 8 bits"], ["Cells", "128 (768 transistors)"], ["Writing now", `row ${writeRow()}`]];
+      now = `Row ${writeRow()}'s <b>word line</b> is on, so its 8 cells connect to the <b>bit lines</b>, which carry x = ${Z.x} (${bin8(Z.x)}). Every other row's word line is off, so those cells just hold what they stored earlier.`;
+      idea = P("Memory is a grid: word lines pick a row, bit lines carry the data in or out. Reading works the same way, except a sense amplifier listens to the bit lines instead of driving them.");
+      break;
+    case "cell": {
+      const v = cellVals(f);
+      title = `6T SRAM cell · row ${f.r}, bit ${f.i}`; facts = [["Transistors", "6"], ["Stores", `Q = ${v.Q}`], ["Word line", v.WL ? "on (writing)" : "off (holding)"]];
+      now = v.WL ? `The word line is on, so both access transistors connect the cell to the bit lines. BL = ${v.BL} forces <b>Q = ${v.Q}</b>, and Q̄ flips to ${v.Qn}.`
+        : `The word line is off, so the access transistors are open and the cell is cut off from the bit lines. The two inverters hold each other: <b>Q = ${v.Q}</b> keeps Q̄ = ${v.Qn}, which keeps Q = ${v.Q}.`;
+      idea = P("This is the SR latch from Learn lesson 9, shrunk to 6 transistors: two cross-coupled inverters remember the bit, and two access transistors let it be read or written.") +
+        P("Because it needs constant power to hold its value, SRAM is fast but forgets everything when the power goes off.");
+      break;
+    }
+    case "race": {
+      const R = raceState();
+      title = "Race: same job, three designs"; facts = [["Job", "C = A × W, 4 × 4"], ["Work", "64 multiply-adds"], ["Multipliers", "CPU 1 · GPU 16 · NPU 16"]];
+      const st = k => R[k].done ? `done in ${R[k].ticks} ticks` : "working";
+      now = `CPU: ${st("cpu")}. GPU: ${st("gpu")}. NPU: ${st("npu")}. Memory reads so far: CPU ${R.cpu.reads}, GPU ${R.gpu.reads}, NPU ${R.npu.reads}.`;
+      const rows = [4, 16, 64, 256].map(n => { const c = n ** 3; return `<tr><td>${n}</td><td>${fmtN(c)}</td><td>${fmtN(c / 16)}</td><td>${fmtN(c / 16 + 6)}</td><td>${fmtN(2 * c)}</td><td class="one">${fmtN(c / 2)}</td></tr>`; }).join("");
+      idea = P("On this tiny job the GPU finishes first: the systolic array spends 6 extra ticks filling and draining. Make the matrices bigger and that overhead disappears, while the NPU still reads <b>4× less</b> from memory.") +
+        `<div class="tt-wrap"><table class="tt"><thead><tr><th>N × N</th><th>CPU ticks</th><th>GPU ticks</th><th>NPU ticks</th><th>CPU/GPU reads</th><th class="sep">NPU reads</th></tr></thead><tbody>${rows}</tbody></table></div>` +
+        P("Moving data costs more energy than multiplying it, which is why AI chips are built around data reuse. Real GPUs close much of this gap with shared memory and tensor cores, which are themselves small matrix-multiply engines.");
       break;
     }
     case "gpu":
@@ -2103,6 +2503,9 @@ $("#zsvg").addEventListener("click", e => {
   else if (p[0] === "sm") push(z, {t:"sm", k:+p[1]});
   else if (p[0] === "lane") push(z, {t:"lane", lane:+p[1]});
   else if (p[0] === "pe") push(z, {t:"pe", i:+p[1], j:+p[2]});
+  else if (v === "cache") push(z, {t:"cache"}, "cache");
+  else if (v === "sram") push(z, {t:"sram"});
+  else if (p[0] === "cell") push(z, {t:"cell", r:+p[1], i:+p[2]});
 });
 $("#crumbs").addEventListener("click", e => { const b = e.target.closest("[data-zc]"); if (b){ Z.stack = Z.stack.slice(0, +b.dataset.zc + 1); zRender(); } });
 $("#right").addEventListener("click", e => {
@@ -2112,10 +2515,783 @@ $("#right").addEventListener("click", e => {
   const sp = e.target.closest("[data-zs]"); if (sp){ Z.speed = +sp.dataset.zs; zRender(); zLoop(); }
 });
 
+/* ---------- For devs: how the hardware shows up in your code ---------- */
+const f32 = new Float32Array(1), u32 = new Uint32Array(f32.buffer);
+const D = {
+  timer:0,
+  int:{v:127, msg:""},
+  fp:{bits:0, text:"0.1", typed:0.1},
+  bw:{a:0b11001010, b:0b10100110, op:"AND"},
+  mem:{order:"row", step:0, playing:false},
+  br:{sorted:false},
+  rc:null
+};
+f32[0] = 0.1; D.fp.bits = u32[0];
+const s8 = v => v >= 128 ? v - 256 : v;
+const hex2 = v => "0x" + v.toString(16).toUpperCase().padStart(2, "0");
+const C = (code) => `<pre class="code">${code}</pre>`;
+const goBtn = (to, label) => `<button class="btn" data-goto="${to}">${esc(label)}</button>`;
+
+/* ---------- lab 1: integers ---------- */
+function labInt(){
+  const v = D.int.v;
+  const bits = [7, 6, 5, 4, 3, 2, 1, 0].map(i => `<div class="bitbtn"><span class="w">${i === 7 ? "128 / −128" : 1 << i}</span><button class="${(v >> i) & 1 ? "on" : ""}" data-ibit="${i}" aria-label="bit ${i}">${(v >> i) & 1}</button></div>`).join("");
+  return C(`<span class="kw">int8_t</span>  a = 127;  a = a + 1;   <span class="cm">// a is now -128</span>
+<span class="kw">uint8_t</span> b = 255;  b = b + 1;   <span class="cm">// b is now 0</span>
+<span class="kw">uint8_t</span> c = 0;    c = c - 1;   <span class="cm">// c is now 255</span>`) + `
+  <div class="dcard">
+    <h3>One 8-bit register</h3>
+    <div class="bitrow">${bits}</div>
+    <div class="nums"><div class="dnum"><span class="k">as uint8_t</span><b>${v}</b></div><div class="dnum"><span class="k">as int8_t</span><b>${s8(v)}</b></div><div class="dnum"><span class="k">hex</span><b>${hex2(v)}</b></div></div>
+    <div class="row"><button class="btn" data-int="dec">− 1</button><button class="btn" data-int="inc">+ 1</button><button class="btn" data-int="neg">Negate</button><button class="btn quiet" data-int="127">Set 127</button><button class="btn quiet" data-int="255">Set 255</button><button class="btn quiet" data-int="0">Set 0</button></div>
+    <p class="explain" aria-live="polite">${D.int.msg || "Click bits to change them, or use the buttons. Try 127 + 1, then 255 + 1."}</p>
+  </div>`;
+}
+function intAct(k){
+  const v = D.int.v; let nv = v, msg = "";
+  if (k === "inc"){ nv = (v + 1) & 255;
+    msg = v === 255 ? "<b>Unsigned overflow.</b> 255 + 1 needs a ninth bit. The adder's carry out of bit 7 has nowhere to go, so the result wraps to 0."
+      : v === 127 ? "<b>Signed overflow.</b> 127 + 1 sets bit 7, which int8 reads as −128. The hardware did exactly the same addition; only the way your type reads the bits changed."
+      : `${v} + 1 = ${nv}. The same adder from the Learn lessons did this.`; }
+  else if (k === "dec"){ nv = (v + 255) & 255;
+    msg = v === 0 ? "0 − 1 wraps to 255 as uint8, which int8 reads as −1. Same bits, two meanings."
+      : v === 128 ? "−128 − 1 wraps to 127 as int8: signed overflow in the other direction." : `${v} − 1 = ${nv}. The CPU subtracts by adding the two's complement of 1.`; }
+  else if (k === "neg"){ nv = (~v + 1) & 255;
+    msg = `<b>Two's complement:</b> flip every bit (${bin8(v)} → ${bin8(~v & 255)}) and add 1 → ${bin8(nv)}. As int8 that's ${s8(nv)}. This is how one adder handles subtraction: a − b = a + (−b).`; }
+  else { nv = +k; msg = `Set to ${nv} (${bin8(nv)}).`; }
+  D.int.v = nv; D.int.msg = msg;
+}
+const sideInt = () => ({
+  why:["The CPU has one adder. Signed, unsigned, positive and negative numbers all go through it; your type only decides how the bits are read.",
+       "Overflow is silent in many languages: Java and Go wrap, and in C signed overflow is undefined behaviour. Rust panics on overflow in debug builds, and Python ints simply grow.",
+       "The Year 2038 problem: 32-bit signed Unix timestamps run out on 19 January 2038, the same wrap you just saw at 127 + 1."],
+  rule:"Pick integer widths on purpose, and check for overflow at boundaries such as counters, IDs, timestamps and money.",
+  go:[["learn:7", "4-bit adder lesson"], ["zoom:cpu", "Live chip: CPU adder"]]
+});
+
+/* ---------- lab 2: floating point ---------- */
+function labFloat(){
+  const b = D.fp.bits; u32[0] = b; const val = f32[0];
+  const s = b >>> 31, e = (b >>> 23) & 255, m = b & 0x7FFFFF;
+  const btn = k => { const on = (b >>> k) & 1, cls = k === 31 ? "fs" : k >= 23 ? "fe" : "fm"; return `<button class="fbit ${cls}${on ? " on" : ""}" data-fbit="${k}" aria-label="bit ${k}">${on}</button>`; };
+  let bits = ""; for (let k = 31; k >= 0; k--){ bits += btn(k); if (k === 31 || k === 23) bits += `<span class="fgap"></span>`; }
+  let formula;
+  if (e === 255) formula = m ? "NaN (not a number)" : `${s ? "−" : "+"}Infinity`;
+  else if (e === 0) formula = `(−1)<sup>${s}</sup> × ${(m / 8388608).toPrecision(8)} × 2<sup>−126</sup>  (subnormal)`;
+  else formula = `(−1)<sup>${s}</sup> × ${(1 + m / 8388608).toPrecision(8)} × 2<sup>${e - 127}</sup>`;
+  const stored = Number.isFinite(val) ? val.toPrecision(20).replace(/0+$/, "").replace(/\.$/, "") : String(val);
+  const err = Number.isFinite(val) && D.fp.typed !== null && Number.isFinite(D.fp.typed) ? val - D.fp.typed : null;
+  const presets = [["0.1", "0.1"], ["0.5", "0.5"], ["1/3", String(1 / 3)], ["3.14159", "3.14159"], ["16777217", "16777217"], ["1e39", "1e39"]];
+  return C(`0.1 + 0.2 === 0.3          <span class="cm">// false</span>
+0.1 + 0.2                  <span class="cm">// ${0.1 + 0.2}</span>
+Math.abs((0.1 + 0.2) - 0.3) < 1e-9   <span class="cm">// true: compare with a tolerance</span>`) + `
+  <div class="dcard">
+    <h3>A 32-bit float, bit by bit</h3>
+    <div class="row" style="align-items:flex-end"><label class="f" for="fpIn" style="flex:1;min-width:160px">Type a number<input type="text" id="fpIn" value="${esc(D.fp.text)}" inputmode="decimal" autocomplete="off"></label>
+      ${presets.map(([l, v]) => `<button class="btn quiet" data-fpset="${esc(v)}">${esc(l)}</button>`).join("")}</div>
+    <div class="fbits">${bits}</div>
+    <div class="flegend"><span><i class="sw fs"></i>sign · 1 bit</span><span><i class="sw fe"></i>exponent · 8 bits = ${e}</span><span><i class="sw fm"></i>mantissa · 23 bits</span></div>
+    <div class="nums">
+      <div class="dnum"><span class="k">formula</span><b style="font-size:16px">${formula}</b></div>
+      <div class="dnum"><span class="k">actually stored</span><b style="font-size:16px;word-break:break-all">${esc(stored)}</b></div>
+      ${err !== null ? `<div class="dnum"><span class="k">error vs what you typed</span><b style="font-size:16px">${err === 0 ? "0 (exact)" : err.toExponential(3)}</b></div>` : ""}
+    </div>
+    <p class="explain">${err === 0 ? "This number fits exactly: it's a sum of powers of two that fits in 23 mantissa bits." : err !== null ? "Not exact. In binary this number either repeats forever (like 1/3 in decimal) or needs more than 24 significant bits, so the hardware rounds to the nearest float it can store." : "Click any bit to see what number it makes."}</p>
+  </div>`;
+}
+function fpSet(txt){
+  const n = parseFloat(txt); D.fp.text = txt;
+  if (!Number.isFinite(n) && !/inf/i.test(txt)){ D.fp.typed = null; return; }
+  f32[0] = n; D.fp.bits = u32[0]; D.fp.typed = n;
+}
+const sideFloat = () => ({
+  why:["0.1 in binary is 0.000110011001100… repeating forever. The hardware has to cut it off, so 0.1 + 0.2 lands one tiny step away from 0.3.",
+       "Floats trade exactness for range: the same 32 bits reach about 3.4 × 10³⁸, but above 16,777,216 they can't even store every whole number. Try 16777217.",
+       "AI chips go the other way: FP16, bfloat16 (8 exponent bits, 7 mantissa bits) and 8-bit formats fit more numbers per memory read and need smaller multipliers. Models tolerate the rounding."],
+  rule:"Never compare floats with ===. Store money as integer cents or a decimal type.",
+  go:[["zoom:npu", "Live chip: NPU multiply-adds"], ["zoom:gpu", "Live chip: GPU multiplier"]]
+});
+
+/* ---------- lab 3: bitwise ---------- */
+const BW_OPS = {AND:(a, b) => a & b, OR:(a, b) => a | b, XOR:(a, b) => a ^ b, "NOT A":a => ~a & 255, "A << 1":a => (a << 1) & 255, "A >> 1":a => a >> 1};
+function labBits(){
+  const {a, b, op} = D.bw, r = BW_OPS[op](a, b), unary = op.startsWith("NOT") || op.includes("<<") || op.includes(">>");
+  const row = (v, name, key, clickable) => `<div class="bwrow"><span class="bwl">${name}</span>${[7, 6, 5, 4, 3, 2, 1, 0].map(i => clickable
+    ? `<button class="bwb${(v >> i) & 1 ? " on" : ""}" data-bw="${key}:${i}" aria-label="${name} bit ${i}">${(v >> i) & 1}</button>`
+    : `<span class="bwb res${(v >> i) & 1 ? " on" : ""}">${(v >> i) & 1}</span>`).join("")}<span class="bwv">= ${v}</span></div>`;
+  const sym = {AND:"&", OR:"|", XOR:"^", "NOT A":"~", "A << 1":"<<", "A >> 1":">>"}[op];
+  return C(`<span class="kw">const</span> READ = 0b100, WRITE = 0b010, EXEC = 0b001;
+<span class="kw">let</span> perms = READ | WRITE;      <span class="cm">// 0b110: set two flags</span>
+<span class="kw">if</span> (perms & WRITE) { … }      <span class="cm">// test a flag</span>
+perms &= ~WRITE;                <span class="cm">// clear a flag → 0b100</span>
+x << 1                          <span class="cm">// x × 2</span>`) + `
+  <div class="dcard">
+    <h3>Two bytes, one operation</h3>
+    <div class="seg" role="group" aria-label="Operation">${Object.keys(BW_OPS).map(k => `<button data-bwop="${k}" aria-pressed="${k === op}">${k}</button>`).join("")}</div>
+    <div class="bwgrid">${row(a, "A", "a", true)}${unary ? "" : row(b, "B", "b", true)}<div class="bwop">${sym} ${unary ? "" : ""}</div>${row(r, "Result", "", false)}</div>
+    <p class="explain">${unary
+      ? (op === "NOT A" ? "NOT flips every bit: 8 inverters side by side, 16 transistors." : op === "A << 1" ? `Shift left moves every bit one place up: ${a} × 2 = ${a * 2}${a * 2 > 255 ? `, but bit 7 falls off the end, so the byte holds ${r}` : ""}. It's just wiring, no gates needed.` : `Shift right moves every bit one place down: ${a} ÷ 2 = ${r}, rounded down.`)
+      : `Each column has its own ${op} gate, and all 8 work at the same time. That's why bitwise operations take a single tick.`}</p>
+  </div>`;
+}
+const sideBits = () => ({
+  why:["A bitwise AND on a 64-bit integer is 64 AND gates working at the same time: about the cheapest thing a CPU can do.",
+       "Masks pack many true/false values into one number: Unix file permissions (chmod 755), feature flags, IP subnet masks and the bitsets inside databases.",
+       "Shifting is how the multiplier in Live chip makes its shifted copies. Compilers turn x * 8 into x << 3 for you."],
+  rule:"Use named constants for flags (READ, WRITE), not magic numbers like 6.",
+  go:[["tv:AND", "Transistor view: AND gate"], ["learn:2", "AND and OR lesson"], ["zoom:gpu", "Live chip: multiplier"]]
+});
+
+/* ---------- lab 4: cache locality ---------- */
+function memSim(order){
+  const seq = []; for (let o = 0; o < 8; o++) for (let p = 0; p < 8; p++) seq.push(order === "row" ? o * 8 + p : p * 8 + o);
+  const cache = [], steps = []; let hits = 0;
+  for (const idx of seq){
+    const line = Math.floor(idx / 4), pos = cache.indexOf(line), hit = pos >= 0;
+    if (hit){ hits++; cache.splice(pos, 1); } else if (cache.length === 4) cache.shift();
+    cache.push(line);
+    steps.push({idx, hit, cache:cache.slice(), hits});
+  }
+  return steps;
+}
+const MEM = {row:memSim("row"), col:memSim("col")};
+function labMem(){
+  const M = D.mem, sim = MEM[M.order], k = M.step, seen = new Map();
+  for (let i = 0; i < k; i++) seen.set(sim[i].idx, sim[i].hit);
+  const cur = k > 0 ? sim[k - 1] : null, cache = cur ? cur.cache : [];
+  const hits = cur ? cur.hits : 0, misses = k - hits, ns = hits * 1 + misses * 100;
+  const total = o => { const s = MEM[o][63]; return {h:s.hits, m:64 - s.hits, ns:s.hits + (64 - s.hits) * 100}; };
+  const tr = total("row"), tc = total("col"), mx = Math.max(tr.ns, tc.ns);
+  let grid = "";
+  for (let idx = 0; idx < 64; idx++){
+    const i = Math.floor(idx / 8), j = idx % 8, st = seen.has(idx) ? (seen.get(idx) ? " hit" : " miss") : "";
+    const inC = cache.includes(Math.floor(idx / 4)) ? " incache" : "", isCur = cur && cur.idx === idx ? " cur" : "";
+    grid += `<div class="mc${st}${inC}${isCur}" title="a[${i}][${j}] at byte ${idx * 4}">${i},${j}</div>`;
+  }
+  const lines = [0, 1, 2, 3].map(n => { const L = cache[n]; return L === undefined ? `<div class="cl empty">empty</div>` : `<div class="cl${cur && Math.floor(cur.idx / 4) === L ? " now" : ""}">line ${L} · a[${Math.floor(L * 4 / 8)}][${(L * 4) % 8}…${(L * 4) % 8 + 3}]</div>`; }).join("");
+  return C(`<span class="cm">// Same work, same answer. Only the loop order differs.</span>
+<span class="${M.order === "row" ? "hlrow" : ""}"><span class="kw">for</span> (i = 0; i < 8; i++) <span class="kw">for</span> (j = 0; j < 8; j++) sum += a[i][j];   <span class="cm">// row by row</span></span>
+<span class="${M.order === "col" ? "hlrow" : ""}"><span class="kw">for</span> (j = 0; j < 8; j++) <span class="kw">for</span> (i = 0; i < 8; i++) sum += a[i][j];   <span class="cm">// column by column</span></span>`) + `
+  <div class="dcard">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <div class="seg" role="group" aria-label="Loop order"><button data-mord="row" aria-pressed="${M.order === "row"}">Row by row</button><button data-mord="col" aria-pressed="${M.order === "col"}">Column by column</button></div>
+      <div class="row"><button class="btn${M.playing ? "" : " primary"}" data-mem="play">${M.playing ? "Pause" : k >= 64 ? "Replay" : "Play"}</button><button class="btn" data-mem="step">Step</button><button class="btn" data-mem="reset">Reset</button></div>
+    </div>
+    <div class="memwrap">
+      <div><p class="note" style="margin-bottom:8px">8 × 8 array of 4-byte ints, stored row after row in memory</p><div class="memgrid">${grid}</div></div>
+      <div class="memside"><p class="note">Tiny cache: 4 lines × 16 bytes (4 ints each)</p>${lines}
+        <div class="nums" style="margin-top:6px"><div class="dnum"><span class="k">hits</span><b style="color:var(--conduct)">${hits}</b></div><div class="dnum"><span class="k">misses</span><b style="color:var(--signal-ink)">${misses}</b></div></div>
+        <div class="dnum"><span class="k">time so far (approx.)</span><b style="font-size:20px">${fmtN(ns)} ns</b></div></div>
+    </div>
+    <div class="cmp"><span>Row by row</span><div class="barbg"><div class="bar" style="width:${(tr.ns / mx * 100).toFixed(1)}%"></div></div><span>${tr.h} hits · ${fmtN(tr.ns)} ns</span>
+      <span>Column by column</span><div class="barbg"><div class="bar warn" style="width:${(tc.ns / mx * 100).toFixed(1)}%"></div></div><span>${tc.h} hits · ${fmtN(tc.ns)} ns</span></div>
+    <p class="explain">A miss loads a whole 16-byte line. Row by row, one miss brings in the next 3 values for free. Column by column jumps 32 bytes each step, so the 4-line cache is full of lines it won't reuse in time: every access misses, about ${(tc.ns / tr.ns).toFixed(1)}× slower. Timing assumes about 1 ns per hit and 100 ns per trip to RAM.</p>
+  </div>`;
+}
+function memTick(){
+  const M = D.mem; if (M.step >= 64){ M.playing = false; clearInterval(D.timer); }
+  else M.step++;
+  renderDev();
+}
+const sideMem = () => ({
+  why:["Rough latencies: L1 cache ≈ 1 ns, L2 ≈ 4 ns, L3 ≈ 10–20 ns, RAM ≈ 100 ns, SSD read ≈ tens of µs, network round trip ≈ 0.5 ms or more. RAM is about 100× slower than L1.",
+       "Hardware always moves memory in whole cache lines (64 bytes on most CPUs), so code that walks memory in order gets most data for free.",
+       "This is why NumPy and pandas care about row vs column layout, why arrays beat linked lists, and why the NPU reuses data instead of re-reading it."],
+  rule:"Walk data in the order it's stored, and keep data you use together close together.",
+  go:[["zoom:cache", "Live chip: L3 cache path"], ["zoom:race", "Race: memory reads"]]
+});
+
+/* ---------- lab 5: branch prediction ---------- */
+const BR_DATA = (() => { const r = prng(5); return Array.from({length:32}, () => Math.floor(r() * 256)); })();
+function brSim(vals){
+  let c = 1, miss = 0; const out = vals.map(v => { const taken = v >= 128, pred = c >= 2, ok = pred === taken; if (!ok) miss++; c = taken ? Math.min(3, c + 1) : Math.max(0, c - 1); return {v, taken, pred, ok}; });
+  return {out, miss};
+}
+function labBranch(){
+  const vals = D.br.sorted ? BR_DATA.slice().sort((x, y) => x - y) : BR_DATA, sim = brSim(vals);
+  const other = brSim(D.br.sorted ? BR_DATA : BR_DATA.slice().sort((x, y) => x - y));
+  const cost = m => 32 + m * 15;
+  const cells = sim.out.map(o => `<div class="sc ${o.ok ? "ok" : "bad"}" title="value ${o.v}: ${o.taken ? "taken" : "not taken"}, predicted ${o.pred ? "taken" : "not taken"}"><b>${o.v}</b><span>${o.taken ? "T" : "N"}</span><span>${o.ok ? "✓" : "✗"}</span></div>`).join("");
+  return C(`<span class="kw">for</span> (<span class="kw">int</span> i = 0; i < n; i++)
+  <span class="kw">if</span> (data[i] >= 128)      <span class="cm">// the CPU must guess this before it knows</span>
+    sum += data[i];`) + `
+  <div class="dcard">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <div class="seg" role="group" aria-label="Data order"><button data-br="random" aria-pressed="${!D.br.sorted}">Random data</button><button data-br="sorted" aria-pressed="${D.br.sorted}">Sorted data</button></div>
+      <span class="note">T = branch taken (≥ 128) · ✓ = guessed right</span>
+    </div>
+    <div class="strip">${cells}</div>
+    <div class="nums"><div class="dnum"><span class="k">wrong guesses</span><b style="color:var(--signal-ink)">${sim.miss} of 32</b></div><div class="dnum"><span class="k">ticks (approx.)</span><b>${cost(sim.miss)}</b></div><div class="dnum"><span class="k">${D.br.sorted ? "random" : "sorted"} would be</span><b>${cost(other.miss)}</b></div></div>
+    <p class="explain">The predictor here is a 2-bit counter: it guesses whatever the branch did recently. ${D.br.sorted ? "On sorted data the answer is \"no\" for a long run, then \"yes\" for the rest, so it's wrong only around the switch." : "On random data there's no pattern to learn, so it's wrong roughly half the time."} Each wrong guess throws away the work already in the pipeline; this assumes about 15 ticks lost each time.</p>
+  </div>`;
+}
+const sideBranch = () => ({
+  why:["A pipelined CPU has to fetch the next instructions before it knows which way an if goes, so it guesses. A wrong guess flushes the pipeline.",
+       "That's why sorting data first can make a loop several times faster, a famous Stack Overflow question. Branchless code (min, max, conditional moves) avoids guessing entirely.",
+       "GPUs dislike branches too: if lanes in one warp take different paths, the warp runs both paths one after the other."],
+  rule:"In hot loops, make branches predictable or remove them. Measure before optimising.",
+  go:[["zoom:cpu", "Live chip: CPU pipeline"], ["zoom:gpu", "Live chip: GPU warps"]]
+});
+
+/* ---------- lab 6: race conditions ---------- */
+function rcReset(){ D.rc = {atomic:D.rc ? D.rc.atomic : false, pc:[0, 0], r:[0, 0], mem:0, log:[]}; }
+rcReset();
+const rcProg = () => D.rc.atomic ? ["ATOMIC ADD count, 1"] : ["LOAD  r, count", "ADD   r, r, 1", "STORE count, r"];
+function rcStep(k){
+  const R = D.rc, prog = rcProg(); if (R.pc[k] >= prog.length) return;
+  const ins = prog[R.pc[k]]; let note = "";
+  if (ins.startsWith("ATOMIC")){ R.mem++; note = `count = ${R.mem} (read, add and write as one step)`; }
+  else if (ins.startsWith("LOAD")){ R.r[k] = R.mem; note = `r = ${R.r[k]}`; }
+  else if (ins.startsWith("ADD")){ R.r[k]++; note = `r = ${R.r[k]}`; }
+  else { R.mem = R.r[k]; note = `count = ${R.mem}`; }
+  R.pc[k]++; R.log.push(`Core ${k}: ${ins.replace(/\s+/g, " ")} → ${note}`);
+}
+function rcRun(order){ rcReset(); order.forEach(k => rcStep(k)); }
+function labRace(){
+  const R = D.rc, prog = rcProg(), done = R.pc[0] >= prog.length && R.pc[1] >= prog.length;
+  const core = k => `<div class="core"><h3>Core ${k}</h3>${prog.map((p, i) => `<div class="instr${i < R.pc[k] ? " done" : i === R.pc[k] ? " next" : ""}">${esc(p)}</div>`).join("")}
+    <div class="dnum" style="margin-top:6px"><span class="k">register r</span><b style="font-size:20px">${R.atomic ? "–" : R.r[k]}</b></div>
+    <button class="btn" data-rc="s${k}" ${R.pc[k] >= prog.length ? "disabled" : ""}>Step core ${k}</button></div>`;
+  const banner = done ? (R.mem === 2 ? `<div class="banner good">count = 2. Correct: both increments counted.</div>` : `<div class="banner bad">count = ${R.mem}. Lost update: both cores read 0 before either wrote, so one increment vanished.</div>`) : "";
+  return C(`<span class="cm">// Two threads, one shared counter</span>
+count++;          <span class="cm">// looks like one step…</span>
+<span class="cm">// …but compiles to three instructions:</span>
+LOAD  r, count    <span class="cm">// read from memory into a register</span>
+ADD   r, r, 1     <span class="cm">// add in the core's ALU</span>
+STORE count, r    <span class="cm">// write back to memory</span>`) + `
+  <div class="dcard">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <div class="row"><button class="btn" data-rc="seq">Run one after the other</button><button class="btn" data-rc="mix">Run interleaved</button><button class="btn quiet" data-rc="reset">Reset</button></div>
+      <label class="note" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="rcAtomic" ${R.atomic ? "checked" : ""}> Use an atomic increment</label>
+    </div>
+    <div class="cores">${core(0)}<div class="memcell"><span class="k">shared memory</span><b>count = ${R.mem}</b><span class="note">in the L3 cache / RAM</span></div>${core(1)}</div>
+    ${banner}
+    <div class="rclog">${R.log.length ? R.log.map(l => `<div>${esc(l)}</div>`).join("") : `<span class="note">Step each core yourself, or use the run buttons. Each core increments count once, so the answer should be 2.</span>`}</div>
+  </div>`;
+}
+const sideRace = () => ({
+  why:["count++ is three instructions, and another core can run its own instructions in between. Bugs like this depend on timing, so they appear rarely and vanish when you add logging.",
+       "An atomic instruction makes the read, add and write one indivisible step: the core holds that cache line exclusively until it's done.",
+       "Mutexes, atomics, channels and database transactions all exist to stop this interleaving."],
+  rule:"Shared mutable data across threads needs a lock, an atomic, or a design that avoids sharing.",
+  go:[["zoom:cache", "Live chip: shared L3 cache"], ["zoom:cpu", "Live chip: CPU core"]]
+});
+
+/* ---------- lab 7: struct layout & endianness ---------- */
+const SF = {
+  a:{type:"char", size:1, align:1, le:[0x41], val:"'A'"},
+  b:{type:"int", size:4, align:4, le:[0x78, 0x56, 0x34, 0x12], val:"0x12345678"},
+  c:{type:"short", size:2, align:2, le:[0xEF, 0xBE], val:"0xBEEF"},
+  d:{type:"char", size:1, align:1, le:[0x5A], val:"'Z'"}
+};
+D.st = {order:["a", "b", "c", "d"], packed:false, big:false};
+function stLayout(order, packed){
+  let off = 0, maxA = 1, pad = 0; const items = [];
+  for (const k of order){
+    const F = SF[k], al = packed ? 1 : F.align; maxA = Math.max(maxA, al);
+    const p = (al - off % al) % al; if (p){ items.push({pad:true, off, size:p}); pad += p; off += p; }
+    items.push({k, off, size:F.size}); off += F.size;
+  }
+  const t = (maxA - off % maxA) % maxA; if (t){ items.push({pad:true, off, size:t}); pad += t; }
+  return {items, size:off + t, pad};
+}
+function labStruct(){
+  const S = D.st, L = stLayout(S.order, S.packed);
+  let cells = "";
+  for (const it of L.items){
+    for (let i = 0; i < it.size; i++){
+      const o = it.off + i;
+      if (it.pad){ cells += `<div class="bcell pad"><span class="bo">${o}</span><b>pad</b></div>`; continue; }
+      const F = SF[it.k], bytes = S.big ? F.le.slice().reverse() : F.le;
+      cells += `<div class="bcell f-${it.k}"><span class="bo">${o}</span><b>${bytes[i].toString(16).toUpperCase().padStart(2, "0")}</b><span class="bf">${it.k}</span></div>`;
+    }
+  }
+  const b = L.items.find(x => x.k === "b"), mis = b && b.off % 4 !== 0;
+  const fields = S.order.map((k, i) => `<div class="sfield f-${k}"><code>${SF[k].type} ${k};</code><span class="note">${SF[k].size} B · align ${SF[k].align} · ${SF[k].val}</span>
+    <span class="row" style="gap:4px"><button class="btn quiet" data-stmv="${k}:-1" ${i === 0 ? "disabled" : ""} aria-label="Move ${k} up">↑</button><button class="btn quiet" data-stmv="${k}:1" ${i === 3 ? "disabled" : ""} aria-label="Move ${k} down">↓</button></span></div>`).join("");
+  const mb = n => (n * 1e6 / 1048576).toFixed(1);
+  return C(`<span class="kw">struct</span> Item { <span class="kw">char</span> a; <span class="kw">int</span> b; <span class="kw">short</span> c; <span class="kw">char</span> d; };
+<span class="kw">sizeof</span>(<span class="kw">struct</span> Item)     <span class="cm">// 12, even though the fields add up to 8</span>
+
+<span class="kw">uint32_t</span> x = 0x12345678;   <span class="cm">// in memory on x86 / ARM: 78 56 34 12</span>`) + `
+  <div class="dcard">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <div class="row"><button class="btn" data-stpre="abcd">As written</button><button class="btn" data-stpre="bcad">Largest first</button></div>
+      <div class="row" style="align-items:center"><label class="note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="stPacked" ${S.packed ? "checked" : ""}> Packed (no padding)</label>
+        <div class="seg small" role="group" aria-label="Byte order"><button data-stend="little" aria-pressed="${!S.big}">Little-endian</button><button data-stend="big" aria-pressed="${S.big}">Big-endian</button></div></div>
+    </div>
+    <div class="sfields">${fields}</div>
+    <div class="bstrip">${cells}</div>
+    <div class="nums"><div class="dnum"><span class="k">sizeof</span><b>${L.size} bytes</b></div><div class="dnum"><span class="k">wasted on padding</span><b style="color:var(--signal-ink)">${L.pad} bytes</b></div><div class="dnum"><span class="k">1 million of them</span><b>${mb(L.size)} MB</b></div></div>
+    <p class="explain">${S.packed ? (mis ? `<b>Packed:</b> no padding, but b now starts at offset ${b.off}, which isn't a multiple of 4. That's an <b>unaligned</b> access: slower on some CPUs, and a crash on others.` : "Packed and still aligned: this order needs no padding anyway.")
+      : L.pad ? `The compiler adds padding so each field starts at a multiple of its own size, because CPUs read aligned data in one go. Reorder the fields (try <b>Largest first</b>) to remove it.` : "No padding needed: every field already starts on its natural boundary."}
+      ${S.big ? " Big-endian stores the most significant byte first (12 34 56 78): the order network protocols use." : " Little-endian stores the least significant byte first, so 0x12345678 appears as 78 56 34 12."}</p>
+  </div>`;
+}
+const sideStruct = () => ({
+  why:["Field order changes memory use. With a million records, 12 bytes vs 8 bytes is about 11 MB vs 8 MB, and fewer cache lines to load.",
+       "Network protocols and many file formats are big-endian (\"network byte order\"), while x86 and ARM run little-endian. That's why functions like htonl() exist.",
+       "Reading a hex dump, a packet capture or a binary file means knowing both rules: where the padding is, and which way round the bytes go."],
+  rule:"Order struct fields from largest to smallest, and always state the byte order of binary data you write.",
+  go:[["dev:3", "Lab 4: memory order"], ["dev:10", "Number inspector"]]
+});
+
+/* ---------- lab 8: the call stack ---------- */
+D.stk = {n:4, step:0, forever:false};
+const STK_LIMIT = 9;
+function stkTrace(n, forever){
+  const st = [{frames:[], line:5, msg:`main() is about to call ${forever ? "forever" : "fact"}(${n}).`}];
+  const fr = [];
+  if (forever){
+    for (let k = 0; k <= STK_LIMIT; k++){
+      const v = n - k; fr.push({fn:"forever", n:v, ret:k ? "forever, line 2" : "main, line 5"});
+      if (fr.length > STK_LIMIT){ st.push({frames:fr.map(f => ({...f})), line:2, overflow:true, msg:"<b>Stack overflow.</b> There's no room for another frame, so the program crashes. The recursion never reaches a base case."}); return st; }
+      st.push({frames:fr.map(f => ({...f})), line:2, msg:`forever(${v}) calls forever(${v - 1}). Another frame is pushed, and there's no base case to stop it.`});
+    }
+    return st;
+  }
+  for (let v = n; v >= 1; v--){
+    fr.push({fn:"fact", n:v, ret:v === n ? "main, line 5" : "fact, line 3"});
+    st.push({frames:fr.map(f => ({...f})), line:v > 1 ? 3 : 2, msg:v > 1 ? `fact(${v}) calls fact(${v - 1}). A new frame is pushed with its own n and the place to return to.` : "fact(1) hits the base case, so it can return without calling again."});
+  }
+  let r = 1;
+  while (fr.length){
+    const f = fr.pop(); r = f.n <= 1 ? 1 : f.n * r;
+    st.push({frames:fr.map(x => ({...x})), line:fr.length ? 3 : 5, msg:fr.length ? `fact(${f.n}) returns ${r}. Its frame is popped and its local n is gone. Control goes back to ${f.ret}.` : `fact(${f.n}) returns ${r} to main. The stack is empty again: fact(${n}) = ${r}.`});
+  }
+  return st;
+}
+function labStack(){
+  const K = D.stk, tr = stkTrace(K.n, K.forever), s = tr[Math.min(K.step, tr.length - 1)];
+  const code = K.forever
+    ? `<span class="${s.line === 1 ? "hlrow" : ""}"><span class="kw">int</span> forever(<span class="kw">int</span> n) {</span>
+<span class="${s.line === 2 ? "hlrow" : ""}">  <span class="kw">return</span> forever(n - 1);     <span class="cm">// no base case!</span></span>
+}
+
+<span class="${s.line === 5 ? "hlrow" : ""}">forever(${K.n});</span>`
+    : `<span class="kw">int</span> fact(<span class="kw">int</span> n) {
+<span class="${s.line === 2 ? "hlrow" : ""}">  <span class="kw">if</span> (n <= 1) <span class="kw">return</span> 1;</span>
+<span class="${s.line === 3 ? "hlrow" : ""}">  <span class="kw">return</span> n * fact(n - 1);</span>
+}
+<span class="${s.line === 5 ? "hlrow" : ""}">result = fact(${K.n});</span>`;
+  let slots = "";
+  for (let i = 0; i < STK_LIMIT; i++){
+    const f = s.frames[i], addr = "0x7FFF" + (0xFF00 - i * 0x20).toString(16).toUpperCase();
+    const top = i === s.frames.length - 1;
+    slots += f ? `<div class="sframe${top ? " top" : ""}"><span class="sa">${addr}</span><b>${f.fn}(n = ${f.n})</b><span class="note">return to ${f.ret}</span>${top ? `<span class="sp">← SP</span>` : ""}</div>`
+      : `<div class="sframe empty"><span class="sa">${addr}</span><span class="note">free</span></div>`;
+  }
+  if (s.overflow) slots += `<div class="sframe over"><b>${s.frames[s.frames.length - 1].fn}(n = ${s.frames[s.frames.length - 1].n})</b><span class="note">doesn't fit: past the end of the stack</span></div>`;
+  return C(code) + `
+  <div class="dcard">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <div class="row"><button class="btn" data-stk="back" ${K.step === 0 ? "disabled" : ""}>Back</button><button class="btn primary" data-stk="step" ${K.step >= tr.length - 1 ? "disabled" : ""}>Step</button><button class="btn quiet" data-stk="reset">Reset</button></div>
+      <div class="row" style="align-items:center"><span class="note">n =</span><div class="seg small" role="group" aria-label="n">${[2, 3, 4, 5, 6].map(v => `<button data-stkn="${v}" aria-pressed="${K.n === v}">${v}</button>`).join("")}</div>
+        <label class="note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="stkForever" ${K.forever ? "checked" : ""}> No base case</label></div>
+    </div>
+    <div class="stkwrap"><div class="stack">${slots}<p class="note" style="text-align:center">stack grows downward ↓ · room for ${STK_LIMIT} frames in this demo</p></div>
+      <div class="memside"><div class="dnum"><span class="k">frames on the stack</span><b>${Math.min(s.frames.length, STK_LIMIT)}${s.overflow ? " (full)" : ""}</b></div>${s.overflow ? `<div class="banner bad">Stack overflow</div>` : ""}<p class="explain" aria-live="polite">${s.msg}</p><p class="note">Step ${Math.min(K.step, tr.length - 1)} of ${tr.length - 1}</p></div></div>
+  </div>`;
+}
+const sideStack = () => ({
+  why:["Every function call pushes a frame: its arguments, local variables and the address to return to. Returning pops it. A debugger's \"call stack\" window is this list.",
+       "The stack is small: typically about 8 MB for a Linux program's main thread and 1 MB on Windows. Deep or endless recursion runs out, and that's a stack overflow.",
+       "Locals disappear when the frame is popped, so returning a pointer to a local variable is a bug. Data that must outlive the call goes on the heap."],
+  rule:"Turn very deep recursion into a loop, and never keep pointers to another function's locals.",
+  go:[["zoom:cpu", "Live chip: CPU registers"], ["dev:8", "Lab 9: virtual memory"]]
+});
+
+/* ---------- lab 9: virtual memory ---------- */
+function vmReset(){
+  const pt = Array.from({length:16}, () => ({s:"none"}));
+  [[0, 3], [1, 7], [4, 1], [8, 0]].forEach(([v, f]) => pt[v] = {s:"mem", f});
+  [2, 5, 10].forEach(v => pt[v] = {s:"disk"});
+  const frames = Array(8).fill(null); pt.forEach((e, v) => { if (e.s === "mem") frames[e.f] = v; });
+  D.vm = {pt, frames, use:Array(8).fill(0), tlb:[], clock:1, last:null, st:{th:0, tm:0, pf:0, sf:0}, text:D.vm ? D.vm.text : "0x1A2C"};
+}
+vmReset();
+function vmAccess(addr){
+  const V = D.vm, vpn = (addr >> 12) & 15, off = addr & 0xFFF; V.clock++;
+  const res = {addr, vpn, off};
+  const ti = V.tlb.findIndex(t => t.v === vpn);
+  if (ti >= 0){ V.st.th++; const t = V.tlb.splice(ti, 1)[0]; V.tlb.push(t); res.kind = "hit"; res.f = t.f; }
+  else {
+    V.st.tm++; const e = V.pt[vpn];
+    if (e.s === "none"){ V.st.sf++; res.kind = "segv"; V.last = res; return; }
+    if (e.s === "disk"){
+      V.st.pf++; let f = V.frames.indexOf(null);
+      if (f < 0){ f = V.use.indexOf(Math.min(...V.use)); const old = V.frames[f]; V.pt[old] = {s:"disk"}; V.tlb = V.tlb.filter(t => t.v !== old); res.evicted = old; }
+      V.pt[vpn] = {s:"mem", f}; V.frames[f] = vpn; res.kind = "fault";
+    } else res.kind = "walk";
+    res.f = V.pt[vpn].f; V.tlb.push({v:vpn, f:res.f}); if (V.tlb.length > 4) V.tlb.shift();
+  }
+  V.use[res.f] = V.clock; res.phys = (res.f << 12) | off; V.last = res;
+}
+function labVM(){
+  const V = D.vm, r = V.last, h3 = v => "0x" + v.toString(16).toUpperCase().padStart(3, "0");
+  const msg = V.err ? "That isn't a valid address. Use hex from 0x0000 to 0xFFFF, like 0x1A2C." : !r ? "Pick an address to access. Every pointer in your program is a virtual address like these."
+    : r.kind === "hit" ? `<b>TLB hit.</b> The translation was cached, so this costs about 1 tick. Page 0x${r.vpn.toString(16).toUpperCase()} → frame ${r.f}.`
+    : r.kind === "walk" ? `<b>TLB miss.</b> The CPU walks the page table in memory (a few extra memory reads, tens to hundreds of ticks), then caches the answer in the TLB.`
+    : r.kind === "fault" ? `<b>Page fault.</b> Page 0x${r.vpn.toString(16).toUpperCase()} was on disk. The OS pauses the program, reads it from the SSD into frame ${r.f}${r.evicted !== undefined ? ` (evicting page 0x${r.evicted.toString(16).toUpperCase()} back to disk)` : ""}, then resumes. That's around 100,000+ ticks.`
+    : `<b>Segmentation fault.</b> Page 0x${r.vpn.toString(16).toUpperCase()} isn't mapped to anything, so the OS stops the program. This is what a bad pointer does.`;
+  const pt = V.pt.map((e, v) => `<div class="ptr${r && r.vpn === v ? " now" : ""}"><span>0x${v.toString(16).toUpperCase()}</span><span class="pill ${e.s}">${e.s === "mem" ? "frame " + e.f : e.s === "disk" ? "on disk" : "unmapped"}</span></div>`).join("");
+  const tlb = [0, 1, 2, 3].map(i => { const t = V.tlb[V.tlb.length - 1 - i]; return t ? `<div class="cl${r && r.vpn === t.v ? " now" : ""}">page 0x${t.v.toString(16).toUpperCase()} → frame ${t.f}</div>` : `<div class="cl empty">empty</div>`; }).join("");
+  const fr = V.frames.map((v, f) => `<div class="pframe${r && r.f === f && r.kind !== "segv" ? " now" : ""}${v === null ? " free" : ""}"><span class="note">frame ${f}</span><b>${v === null ? "free" : "page 0x" + v.toString(16).toUpperCase()}</b></div>`).join("");
+  const presets = ["0x1A2C", "0x1FFC", "0x4010", "0x2004", "0x5000", "0xA123", "0x9000"];
+  return C(`<span class="kw">int</span> *p = (<span class="kw">int</span>*) 0x1A2C;   <span class="cm">// your code only ever sees virtual addresses</span>
+*p = 42;                     <span class="cm">// the CPU translates: virtual page → physical frame</span>
+<span class="kw">int</span> *bad = (<span class="kw">int</span>*) 0x9000;
+*bad = 1;                    <span class="cm">// unmapped page → Segmentation fault</span>`) + `
+  <div class="dcard">
+    <div class="row" style="align-items:flex-end"><label class="f" for="vmIn" style="width:170px">Virtual address (hex)<input type="text" id="vmIn" value="${esc(V.text)}" autocomplete="off"></label><button class="btn primary" data-vm="go">Access</button>
+      ${presets.map(p => `<button class="btn quiet" data-vmset="${p}">${p}</button>`).join("")}<button class="btn" data-vm="reset">Reset</button></div>
+    ${r ? `<div class="vaddr"><span class="vpart vpn">page 0x${r.vpn.toString(16).toUpperCase()}</span><span class="vpart off">offset ${h3(r.off)}</span><span class="varrow">→</span>${r.kind === "segv" ? `<span class="vpart bad">no physical address</span>` : `<span class="vpart phys">physical 0x${r.phys.toString(16).toUpperCase().padStart(4, "0")}</span>`}</div>` : ""}
+    <p class="explain" aria-live="polite">${msg}</p>
+    <div class="vmgrid">
+      <div><p class="note">TLB: 4 recent translations</p>${tlb}</div>
+      <div><p class="note">Page table: 16 pages × 4 KB</p><div class="ptable">${pt}</div></div>
+      <div><p class="note">Physical RAM: 8 frames</p><div class="pframes">${fr}</div></div>
+    </div>
+    <div class="nums"><div class="dnum"><span class="k">TLB hits</span><b style="color:var(--conduct)">${V.st.th}</b></div><div class="dnum"><span class="k">TLB misses</span><b>${V.st.tm}</b></div><div class="dnum"><span class="k">page faults</span><b style="color:var(--signal-ink)">${V.st.pf}</b></div><div class="dnum"><span class="k">segfaults</span><b style="color:var(--danger)">${V.st.sf}</b></div></div>
+  </div>`;
+}
+function vmGo(txt){
+  const t = String(txt).trim(), n = /^0x[0-9a-f]+$/i.test(t) ? parseInt(t, 16) : /^\d+$/.test(t) ? +t : NaN;
+  D.vm.text = t;
+  if (!Number.isFinite(n) || n < 0 || n > 0xFFFF){ D.vm.last = null; D.vm.err = true; return; }
+  D.vm.err = false; vmAccess(n);
+}
+const sideVM = () => ({
+  why:["Every process thinks it owns all of memory. The OS and CPU map each 4 KB page to wherever it really is, which is why two programs can use the same address without clashing.",
+       "A segfault means your pointer landed on a page that isn't mapped. A page fault isn't a bug: the page was just on disk and the OS fetched it.",
+       "When RAM fills up, the OS keeps evicting pages to disk and fetching them back (\"thrashing\"). Programs don't crash, they crawl. Random access over huge data also misses the TLB constantly."],
+  rule:"If memory use creeps past physical RAM, expect slowness before you see an error.",
+  go:[["dev:3", "Lab 4: memory order"], ["zoom:cache", "Live chip: L3 cache"]]
+});
+
+/* ---------- lab 10: SIMD ---------- */
+const SA = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3], SB = [2, 7, 1, 8, 2, 8, 1, 8, 2, 8, 4, 5, 9, 0, 4, 5];
+D.simd = {w:1, step:0, playing:false};
+const SIMD_W = [[1, "Scalar", "add"], [4, "SSE (128-bit)", "paddd xmm"], [8, "AVX2 (256-bit)", "vpaddd ymm"], [16, "AVX-512", "vpaddd zmm"]];
+function labSIMD(){
+  const M = D.simd, total = 16 / M.w, done = Math.min(M.step, total) * M.w, cur = M.step < total ? M.step : -1;
+  const row = (arr, name, out) => `<div class="srow"><span class="bwl">${name}</span>${arr.map((v, i) => {
+    const g = Math.floor(i / M.w), isDone = i < done, isCur = g === cur && M.playing;
+    return `<span class="scell${out && !isDone ? " empty" : ""}${isDone && out ? " done" : ""}${isCur ? " cur" : ""}${(g % 2) && M.w > 1 ? " alt" : ""}">${out ? (isDone ? arr[i] : "·") : v}</span>`; }).join("")}</div>`;
+  const C3 = SA.map((v, i) => v + SB[i]);
+  const info = SIMD_W.find(x => x[0] === M.w);
+  const bars = SIMD_W.map(([w, l]) => `<span>${l}</span><div class="barbg"><div class="bar${w === 1 ? " warn" : ""}" style="width:${(16 / w) / 16 * 100}%"></div></div><span>${16 / w} instruction${16 / w > 1 ? "s" : ""}</span>`).join("");
+  return C(`<span class="kw">for</span> (i = 0; i < 16; i++) c[i] = a[i] + b[i];
+<span class="cm">// scalar: 16 separate add instructions</span>
+<span class="cm">// AVX2:   2 × vpaddd ymm  (8 ints per instruction)</span>
+<span class="cm">// compilers often do this for you ("auto-vectorisation")</span>`) + `
+  <div class="dcard">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <div class="seg small" role="group" aria-label="Vector width">${SIMD_W.map(([w, l]) => `<button data-simdw="${w}" aria-pressed="${M.w === w}">${l}</button>`).join("")}</div>
+      <div class="row"><button class="btn${M.playing ? "" : " primary"}" data-simd="play">${M.playing ? "Pause" : M.step >= total ? "Replay" : "Play"}</button><button class="btn" data-simd="step">Step</button><button class="btn" data-simd="reset">Reset</button></div>
+    </div>
+    <div class="sgrid">${row(SA, "a", false)}${row(SB, "b", false)}${row(C3, "c = a + b", true)}</div>
+    <div class="nums"><div class="dnum"><span class="k">instructions used</span><b>${Math.min(M.step, total)} of ${total}</b></div><div class="dnum"><span class="k">numbers per instruction</span><b>${M.w}</b></div><div class="dnum"><span class="k">instruction</span><b style="font-size:16px">${info[2]}</b></div></div>
+    <div class="cmp">${bars}</div>
+    <p class="explain">A SIMD (single instruction, multiple data) register holds several numbers side by side, and one instruction adds them all with a row of adders working at once. It's the same idea as a GPU warp, just smaller: 4 to 16 lanes inside a CPU core instead of thousands across a GPU.</p>
+  </div>`;
+}
+function simdTick(){ const M = D.simd; if (M.step >= 16 / M.w){ M.playing = false; clearInterval(D.timer); } else M.step++; renderDev(); }
+const sideSIMD = () => ({
+  why:["NumPy, image and video codecs, JSON parsers and databases all use SIMD to process several values per instruction.",
+       "Compilers vectorise simple loops automatically, but only when the data is in contiguous arrays and the loop has no tricky dependencies or branches.",
+       "This is the CPU's version of what GPUs and NPUs do at huge scale: the same operation over lots of data at once."],
+  rule:"Keep hot data in plain contiguous arrays and simple loops, so the compiler and libraries can vectorise them.",
+  go:[["zoom:gpu", "Live chip: GPU lanes"], ["zoom:race", "Race: CPU vs GPU vs NPU"]]
+});
+
+/* ---------- tool: number inspector ---------- */
+D.ni = {text:"-42", w:8};
+function niParse(t){
+  t = String(t).trim().replace(/_/g, "");
+  let m;
+  if ((m = t.match(/^(-?)0x([0-9a-f]+)$/i))) return (m[1] ? -1 : 1) * parseInt(m[2], 16);
+  if ((m = t.match(/^(-?)0b([01]+)$/i))) return (m[1] ? -1 : 1) * parseInt(m[2], 2);
+  if (/^'.'$/.test(t)) return t.charCodeAt(1);
+  if (t === "") return NaN;
+  return Number(t);
+}
+function niOut(){
+  const n = niParse(D.ni.text), w = D.ni.w;
+  if (!Number.isFinite(n)) return `<p class="err">Enter a number like 42, -42, 3.14, 0xFF, 0b1010 or 'A'.</p>`;
+  const iv = Math.trunc(n), mod = 2 ** w, u = ((iv % mod) + mod) % mod, sg = u >= mod / 2 ? u - mod : u;
+  const fits = iv >= -(mod / 2) && iv <= mod - 1;
+  const binStr = u.toString(2).padStart(w, "0").replace(/(.{4})(?=.)/g, "$1 ");
+  const bytes = []; for (let i = 0; i < w / 8; i++) bytes.push(Math.floor(u / 2 ** (8 * i)) % 256);
+  const hb = b => b.toString(16).toUpperCase().padStart(2, "0");
+  f32[0] = n; const fb = u32[0], fv = f32[0];
+  const dv = new DataView(new ArrayBuffer(8)); dv.setFloat64(0, n); let d64 = ""; for (let i = 0; i < 8; i++) d64 += hb(dv.getUint8(i)) + (i < 7 ? " " : "");
+  const rows = [
+    ["Binary", binStr, true],
+    ["Hex", "0x" + u.toString(16).toUpperCase().padStart(w / 4, "0"), true],
+    [`uint${w}_t`, String(u)],
+    [`int${w}_t`, String(sg)],
+    ["Bytes, little-endian", bytes.map(hb).join(" ")],
+    ["Bytes, big-endian", bytes.slice().reverse().map(hb).join(" ")],
+    ["As a character", u >= 32 && u <= 126 ? `'${String.fromCharCode(u)}'` : "not printable ASCII"],
+    ["float32 bits", "0x" + fb.toString(16).toUpperCase().padStart(8, "0") + `  (stores ${Number.isFinite(fv) ? fv.toPrecision(9).replace(/\.?0+$/, "") : fv})`],
+    ["float64 bytes", d64]
+  ];
+  const warn = !Number.isInteger(n) ? `<p class="note">Not a whole number: the integer rows use ${iv} (the fraction is dropped, as a cast to int would do).</p>`
+    : !fits ? `<p class="err">${iv} doesn't fit in ${w} bits, so it wraps to ${u} (unsigned) / ${sg} (signed). That's overflow.</p>` : "";
+  return warn + `<div class="kvt">${rows.map(r => `<span class="k">${esc(r[0])}</span><code>${esc(r[1])}</code>${r[2] ? `<button class="btn quiet" data-copy="${esc(r[1].replace(/\s/g, ""))}">Copy</button>` : "<span></span>"}`).join("")}</div>`;
+}
+function labNum(){
+  return `<div class="dcard">
+    <div class="row" style="align-items:flex-end"><label class="f" for="niIn" style="flex:1;min-width:200px">Number<input type="text" id="niIn" value="${esc(D.ni.text)}" autocomplete="off" spellcheck="false" placeholder="42, -42, 3.14, 0xFF, 0b1010, 'A'"></label>
+      <div class="seg" role="group" aria-label="Integer width">${[8, 16, 32].map(w => `<button data-niw="${w}" aria-pressed="${D.ni.w === w}">${w}-bit</button>`).join("")}</div></div>
+    <div id="niOut">${niOut()}</div>
+  </div>`;
+}
+const sideNum = () => ({
+  why:["Handy when debugging: read a hex dump, check a bitmask, decode a byte from a packet, or see why a value overflowed.",
+       "Accepts decimal, negative numbers, decimals, 0x hex, 0b binary, and a single character in quotes such as 'A'.",
+       "The same number looks different depending on width, signedness and byte order. This shows all of them side by side."],
+  rule:"When a value looks wrong, look at its bits before you look at the logic.",
+  go:[["dev:0", "Lab 1: integers"], ["dev:1", "Lab 2: floats"], ["dev:6", "Lab 7: byte order"]]
+});
+
+/* ---------- registry + render ---------- */
+const LABS = [
+  {t:"Integers have a fixed width", s:"overflow & two's complement", intro:"Your int is a fixed number of wires. Run out of bits and the number wraps around, with no error, because the hardware has nowhere to put the extra carry.", render:labInt, side:sideInt},
+  {t:"Floats are approximations", s:"why 0.1 + 0.2 ≠ 0.3", intro:"A float is three bit fields packed into 32 or 64 bits. Most decimal numbers can't be written exactly in binary, so the hardware stores the nearest one it can.", render:labFloat, side:sideFloat},
+  {t:"Bitwise ops are gates", s:"masks, flags & shifts", intro:"&, |, ^ and ~ in your code map directly onto rows of AND, OR, XOR and NOT gates, one per bit, all working at once.", render:labBits, side:sideBits},
+  {t:"Memory order matters", s:"caches & locality", intro:"Two loops that do the same work can differ hugely in speed. The difference is whether the cache can serve the next value or has to wait for RAM.", render:labMem, side:sideMem},
+  {t:"Branches are guesses", s:"why sorted data can run faster", intro:"A pipelined CPU starts work on the next instructions before it knows which way an if will go. It guesses, and a wrong guess wastes work.", render:labBranch, side:sideBranch},
+  {t:"count++ isn't one step", s:"race conditions", intro:"Two cores share memory but each does its own maths in its own registers. Without coordination, their steps can interleave and lose work.", render:labRace, side:sideRace},
+  {t:"Structs have hidden padding", s:"alignment & byte order", intro:"The compiler lays struct fields out in memory with gaps so the CPU can read each one in a single step. And multi-byte numbers can be stored either way round.", render:labStruct, side:sideStruct},
+  {t:"The call stack", s:"frames, recursion & overflow", intro:"Each function call gets a frame on the stack for its arguments, locals and return address. Watch recursion push frames, pop them, and run out of room.", render:labStack, side:sideStack},
+  {t:"Pointers are virtual", s:"pages, TLB & segfaults", intro:"The addresses your program uses aren't real RAM addresses. The CPU translates every one, page by page, with help from the operating system.", render:labVM, side:sideVM},
+  {t:"One instruction, many numbers", s:"SIMD vectorisation", intro:"Modern CPUs can add 4, 8 or 16 numbers with a single instruction. It's how NumPy, video codecs and databases get their speed.", render:labSIMD, side:sideSIMD},
+  {t:"Number inspector", s:"bits, hex, bytes, floats", intro:"Type any number and see how it's stored: binary, hex, signed and unsigned, both byte orders, and as a float.", render:labNum, side:sideNum, tool:true}
+];
+function renderDev(){
+  if (state.mode !== "dev") return;
+  const L = LABS[state.lab], i = state.lab;
+  $("#dstage").innerHTML = `<div class="dwrap">
+    <div><p class="eyebrow">${L.tool ? "For devs · Tool" : `For devs · Lab ${i + 1} of ${LABS.filter(x => !x.tool).length} ${lvlTag(LAB_LVL[i])}`}</p><h1 class="dtitle">${esc(L.t)}</h1><p class="dintro">${esc(L.intro)}</p></div>
+    ${L.render()}
+    <div class="lesson-nav"><button class="btn" data-labnav="-1" ${i === 0 ? "disabled" : ""}>Previous</button><button class="btn primary" data-labnav="1" ${i === LABS.length - 1 ? "disabled" : ""}>Next lab</button></div>
+  </div>`;
+  const sd = L.side();
+  $("#right").innerHTML = `<section class="block"><h2 class="sec">Why it matters in code</h2><ul class="help">${sd.why.map(w => `<li>${esc(w)}</li>`).join("")}</ul></section>
+    <section class="block"><h2 class="sec">Rule of thumb</h2><p class="insight">${esc(sd.rule)}</p></section>
+    <section class="block"><h2 class="sec">See it in Chip Lab</h2><div class="row">${sd.go.map(g => goBtn(g[0], g[1])).join("")}</div></section>`;
+  const fi = $("#fpIn");
+  if (fi) fi.addEventListener("keydown", e => { if (e.key === "Enter"){ fpSet(fi.value.trim()); renderDev(); } });
+  if (fi) fi.addEventListener("change", () => { fpSet(fi.value.trim()); renderDev(); });
+  const sp = $("#stPacked"); if (sp) sp.addEventListener("change", () => { D.st.packed = sp.checked; renderDev(); });
+  const sf = $("#stkForever"); if (sf) sf.addEventListener("change", () => { D.stk.forever = sf.checked; D.stk.step = 0; renderDev(); });
+  const vi = $("#vmIn"); if (vi) vi.addEventListener("keydown", e => { if (e.key === "Enter"){ vmGo(vi.value); renderDev(); } });
+  const ni = $("#niIn"); if (ni) ni.addEventListener("input", () => { D.ni.text = ni.value; $("#niOut").innerHTML = niOut(); });
+  const ra = $("#rcAtomic");
+  if (ra) ra.addEventListener("change", () => { D.rc.atomic = ra.checked; rcReset(); renderDev(); });
+}
+function devStop(){ clearInterval(D.timer); D.mem.playing = false; if (D.simd) D.simd.playing = false; }
+function openLab(i){ devStop(); state.lab = Math.max(0, Math.min(LABS.length - 1, i)); renderLeft(); renderDev(); persist(); $("#dstage").scrollTop = 0; }
+$("#dstage").addEventListener("click", e => {
+  const t = e.target.closest("button"); if (!t) return;
+  const d = t.dataset;
+  if (d.labnav){ openLab(state.lab + +d.labnav); return; }
+  if (d.ibit){ D.int.v ^= 1 << +d.ibit; D.int.msg = `Bit ${d.ibit} is worth ${+d.ibit === 7 ? "128 as unsigned, or −128 as signed" : 1 << +d.ibit}.`; }
+  else if (d.int){ intAct(d.int); }
+  else if (d.fbit){ D.fp.bits = (D.fp.bits ^ (1 << +d.fbit)) >>> 0; D.fp.typed = null; u32[0] = D.fp.bits; D.fp.text = String(f32[0]); }
+  else if (d.fpset){ fpSet(d.fpset); }
+  else if (d.bwop){ D.bw.op = d.bwop; }
+  else if (d.bw){ const [k, i] = d.bw.split(":"); D.bw[k] ^= 1 << +i; }
+  else if (d.mord){ devStop(); D.mem.order = d.mord; D.mem.step = 0; }
+  else if (d.mem){
+    if (d.mem === "play"){
+      if (D.mem.playing){ devStop(); }
+      else { if (D.mem.step >= 64) D.mem.step = 0; D.mem.playing = true; clearInterval(D.timer); D.timer = setInterval(memTick, reduceMotion() ? 60 : 220); }
+    } else if (d.mem === "step"){ devStop(); if (D.mem.step < 64) D.mem.step++; }
+    else { devStop(); D.mem.step = 0; }
+  }
+  else if (d.br){ D.br.sorted = d.br === "sorted"; }
+  else if (d.stmv){ const [k, dir] = d.stmv.split(":"), o = D.st.order, i = o.indexOf(k), j = i + +dir; if (j >= 0 && j < 4){ [o[i], o[j]] = [o[j], o[i]]; } }
+  else if (d.stpre){ D.st.order = d.stpre.split(""); }
+  else if (d.stend){ D.st.big = d.stend === "big"; }
+  else if (d.stk){ const n = stkTrace(D.stk.n, D.stk.forever).length - 1; if (d.stk === "step") D.stk.step = Math.min(n, D.stk.step + 1); else if (d.stk === "back") D.stk.step = Math.max(0, D.stk.step - 1); else D.stk.step = 0; }
+  else if (d.stkn){ D.stk.n = +d.stkn; D.stk.step = 0; }
+  else if (d.vmset){ vmGo(d.vmset); }
+  else if (d.vm){ if (d.vm === "go") vmGo($("#vmIn").value); else vmReset(); }
+  else if (d.simdw){ devStop(); D.simd.w = +d.simdw; D.simd.step = 0; }
+  else if (d.simd){
+    const total = 16 / D.simd.w;
+    if (d.simd === "play"){ if (D.simd.playing) devStop(); else { if (D.simd.step >= total) D.simd.step = 0; D.simd.playing = true; clearInterval(D.timer); D.timer = setInterval(simdTick, reduceMotion() ? 80 : 450); } }
+    else if (d.simd === "step"){ devStop(); if (D.simd.step < total) D.simd.step++; }
+    else { devStop(); D.simd.step = 0; }
+  }
+  else if (d.niw){ D.ni.w = +d.niw; }
+  else if (d.copy !== undefined){ try { navigator.clipboard.writeText(d.copy).then(() => toast("Copied " + d.copy), () => toast("Couldn't copy. Select the text and copy it yourself.")); } catch (_) { toast("Couldn't copy. Select the text and copy it yourself."); } return; }
+  else if (d.rc){
+    if (d.rc === "s0") rcStep(0); else if (d.rc === "s1") rcStep(1);
+    else if (d.rc === "seq") rcRun(D.rc.atomic ? [0, 1] : [0, 0, 0, 1, 1, 1]);
+    else if (d.rc === "mix") rcRun(D.rc.atomic ? [0, 1] : [0, 1, 0, 1, 0, 1]);
+    else rcReset();
+  }
+  else return;
+  renderDev();
+});
+document.addEventListener("click", e => {
+  const g = e.target.closest("[data-goto]"); if (!g) return;
+  const [kind, arg] = g.dataset.goto.split(":"); closeModal();
+  if (kind === "learn"){ state.lesson = +arg; setMode("learn"); }
+  else if (kind === "zoom"){ setMode("zoom"); zBranch(arg); }
+  else if (kind === "tv"){ openTV(arg, {A:1, B:1}); }
+  else if (kind === "dev"){ if (state.mode !== "dev") setMode("dev"); openLab(+arg); }
+  else if (kind === "build"){ setMode("build"); }
+});
+
+/* ---------- on-ramps: difficulty tags, glossary, start here, about ---------- */
+const VERSION = "2.2";
+function lvlTag(l){ if (!l) return ""; const n = {b:"Beginner", i:"Intermediate", d:"Deep dive"}[l]; return `<span class="lvl lvl-${l}">${n}</span>`; }
+const LESSON_LVL = ["b", "b", "b", "b", "b", "b", "i", "i", "i"];
+const LAB_LVL = ["b", "b", "b", "i", "i", "b", "i", "b", "i", "i"];
+const ZOOM_LVL = {die:"b", core:"b", gpu:"b", npu:"b", cache:"b", race:"b", adder:"i", sm:"i", lane:"i", pe:"i", mul:"i", sram:"i", fa:"d", nand:"d", cell:"d", tr:"d"};
+
+const GLOSSARY = [
+  ["two's complement", "The standard way to store negative integers: flip every bit and add 1. It lets one adder handle both addition and subtraction."],
+  ["transistor", "A tiny electrically controlled switch. A voltage on its gate turns it on or off. Chips are billions of these."],
+  ["CMOS", "Complementary metal-oxide-semiconductor: the chip technology that pairs pMOS and nMOS transistors so a gate uses almost no power when idle."],
+  ["pMOS", "A transistor that turns ON when its gate is 0. Used to connect outputs to power (1). Drawn with a small bubble."],
+  ["nMOS", "A transistor that turns ON when its gate is 1. Used to connect outputs to ground (0)."],
+  ["VDD", "The power supply rail. Anything connected to it reads as 1."],
+  ["GND", "Ground: the 0-volt rail. Anything connected to it reads as 0."],
+  ["truth table", "A table listing a circuit's output for every possible combination of inputs."],
+  ["half adder", "Adds two bits. Gives a sum bit (XOR) and a carry bit (AND)."],
+  ["full adder", "Adds three bits: A, B and a carry in from the column to the right. Chained together, full adders add whole numbers."],
+  ["carry", "The extra 1 that moves to the next column when a column adds up to 2 or more, just like carrying in decimal addition."],
+  ["latch", "A circuit that remembers a bit by feeding its outputs back into its inputs."],
+  ["ALU", "Arithmetic logic unit: the part of a CPU core that adds, subtracts and does logic."],
+  ["pipeline", "Splitting instruction processing into stages so several instructions are in progress at once, like an assembly line."],
+  ["register", "A tiny, very fast storage slot inside the CPU core that holds a value being worked on."],
+  ["cache line", "The fixed-size chunk (usually 64 bytes) that memory always moves in between RAM and the caches."],
+  ["cache", "Small, fast memory near the cores that keeps recently used data, so the CPU doesn't wait for RAM."],
+  ["SRAM", "Static RAM: memory made of 6-transistor cells. Fast, used for caches, and loses data when power is off."],
+  ["word line", "The wire that selects one row of memory cells for reading or writing."],
+  ["bit line", "The wire that carries one bit of data into or out of a column of memory cells."],
+  ["TLB", "Translation lookaside buffer: a small cache of recent virtual-to-physical address translations."],
+  ["page table", "The OS's map from each virtual memory page to where it really lives in RAM (or on disk)."],
+  ["page fault", "The program touched a page that isn't in RAM yet, so the OS pauses it and loads the page from disk."],
+  ["Segmentation fault", "The program used an address that isn't mapped to anything, so the OS stops it."],
+  ["virtual address", "The address your program sees. The CPU translates it to a real (physical) RAM address."],
+  ["SIMD", "Single instruction, multiple data: one instruction that works on several numbers at once."],
+  ["warp", "A group of 32 GPU lanes that run the same instruction together."],
+  ["lane", "One of the many simple arithmetic units in a GPU cluster, each working on its own piece of data."],
+  ["systolic array", "A grid of multiply-add units that passes data from neighbour to neighbour, reusing each value many times. The core of TPUs and NPUs."],
+  ["multiply-accumulate", "acc = acc + a × w. The basic operation of neural networks and AI chips. Often shortened to MAC."],
+  ["NPU", "Neural processing unit: a chip block built mainly for the multiply-adds that AI models need."],
+  ["TOPS", "Trillions of operations per second: how AI chips advertise their speed."],
+  ["overflow", "When a result needs more bits than the variable has, so it wraps around."],
+  ["mantissa", "The part of a floating-point number that holds its significant digits."],
+  ["exponent", "The part of a floating-point number that says where the binary point goes, setting its scale."],
+  ["little-endian", "Storing the least significant byte of a number first in memory. Used by x86 and ARM."],
+  ["big-endian", "Storing the most significant byte first. Used by many network protocols."],
+  ["padding", "Unused bytes the compiler inserts in a struct so each field starts at an aligned address."],
+  ["unaligned", "Data that doesn't start at a multiple of its own size, which can be slower or crash on some CPUs."],
+  ["stack frame", "The chunk of the stack a function call gets for its arguments, locals and return address."],
+  ["stack overflow", "Running out of stack space, usually from recursion that's too deep or never stops."],
+  ["branch predictor", "Hardware that guesses which way an if will go so the pipeline doesn't stall."],
+  ["atomic", "An operation that happens as one indivisible step, so no other core can interleave with it."],
+  ["lost update", "When two threads read the same old value, each writes back, and one update disappears."],
+  ["clock", "A signal that ticks at a steady rate, keeping every part of the chip in step."]
+];
+const GL_RE = new RegExp("\\b(" + GLOSSARY.map(g => g[0].replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).sort((a, b) => b.length - a.length).join("|") + ")s?\\b", "i");
+const GL_MAP = new Map(GLOSSARY.map(g => [g[0].toLowerCase(), g]));
+const GL_SKIP = "pre,code,button,svg,textarea,input,label,h1,h2,h3,.bignum,.gl,.lvl,.kvt,.instr,.rclog,.cl,.pill,select,table";
+let glBusy = false;
+function glossify(root){
+  if (!root || glBusy) return; glBusy = true;
+  try {
+    const used = new Set([...root.querySelectorAll(".gl")].map(e => e.dataset.gl));
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode:n => (n.parentElement && !n.parentElement.closest(GL_SKIP) && n.nodeValue.trim().length > 2) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT});
+    const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    for (const node of nodes){
+      let pos = 0, guard = 0;
+      while (guard++ < 12){
+        const text = node.nodeValue, m = text.slice(pos).match(GL_RE); if (!m) break;
+        const entry = GL_MAP.get(m[1].toLowerCase());
+        const start = pos + m.index;
+        if (!entry || used.has(entry[0])){ pos = start + m[0].length; continue; }
+        used.add(entry[0]);
+        const parent = node.parentNode; if (!parent) break;
+        const span = document.createElement("span"); span.className = "gl"; span.tabIndex = 0; span.dataset.gl = entry[0]; span.textContent = m[0];
+        parent.insertBefore(document.createTextNode(text.slice(0, start)), node);
+        parent.insertBefore(span, node);
+        node.nodeValue = text.slice(start + m[0].length); pos = 0;
+      }
+    }
+  } finally { glBusy = false; }
+}
+const GL_ROOTS = ["#right", "#lessonCard", "#dstage", "#tvSide", "#zhint"];
+const glObs = new MutationObserver(muts => {
+  if (glBusy) return;
+  const roots = new Set();
+  muts.forEach(m => { const r = GL_ROOTS.map(s => $(s)).find(el => el && el.contains(m.target)); if (r) roots.add(r); });
+  requestAnimationFrame(() => roots.forEach(glossify));
+});
+GL_ROOTS.forEach(s => { const el = $(s); if (el) glObs.observe(el, {childList:true, subtree:true}); });
+const glPop = document.createElement("div"); glPop.id = "glpop"; glPop.setAttribute("role", "tooltip"); document.body.appendChild(glPop);
+function glShow(el){
+  const g = GL_MAP.get(el.dataset.gl.toLowerCase()); if (!g) return;
+  glPop.innerHTML = `<b>${esc(g[0])}</b><span>${esc(g[1])}</span>`; glPop.classList.add("show");
+  const r = el.getBoundingClientRect(), pw = Math.min(300, window.innerWidth - 24);
+  glPop.style.width = pw + "px";
+  let left = Math.min(Math.max(12, r.left + r.width / 2 - pw / 2), window.innerWidth - pw - 12);
+  let top = r.bottom + 8; glPop.style.left = left + "px"; glPop.style.top = top + "px";
+  const ph = glPop.offsetHeight; if (top + ph > window.innerHeight - 8){ glPop.style.top = (r.top - ph - 8) + "px"; }
+}
+function glHide(){ glPop.classList.remove("show"); }
+document.addEventListener("mouseover", e => { const g = e.target.closest && e.target.closest(".gl"); if (g) glShow(g); });
+document.addEventListener("mouseout", e => { if (e.target.closest && e.target.closest(".gl")) glHide(); });
+document.addEventListener("focusin", e => { if (e.target.classList && e.target.classList.contains("gl")) glShow(e.target); });
+document.addEventListener("focusout", e => { if (e.target.classList && e.target.classList.contains("gl")) glHide(); });
+document.addEventListener("click", e => { const g = e.target.closest && e.target.closest(".gl"); if (g){ glShow(g); } else glHide(); });
+window.addEventListener("scroll", glHide, true);
+
+function showStart(){
+  openModal("Welcome to Chip Lab", `
+    <p class="note" style="font-size:14px">Learn how a computer works, from a single switch to the AI chip in your phone. Everything is live: click, toggle and zoom.</p>
+    <ol class="startpath">
+      <li><div><b>Learn the basics</b> ${lvlTag("b")}<span class="note">Lessons 1–6: bits, gates and how a chip adds. About 15 minutes.</span></div><button class="btn primary" data-goto="learn:0">Start lesson 1</button></li>
+      <li><div><b>Zoom into a live chip</b> ${lvlTag("b")}<span class="note">From the whole chip down to one transistor, while it runs.</span></div><button class="btn" data-goto="zoom:cpu">Open Live chip</button></li>
+      <li><div><b>If you write code</b> ${lvlTag("b")}<span class="note">Why 127 + 1 = −128, why 0.1 + 0.2 ≠ 0.3, and more.</span></div><button class="btn" data-goto="dev:0">For devs, lab 1</button></li>
+      <li><div><b>Build your own chip</b> ${lvlTag("i")}<span class="note">Wire gates, test them, save them as reusable chips.</span></div><button class="btn" data-goto="build:">Open Build</button></li>
+    </ol>
+    <p class="note">Tags show how deep each part goes: ${lvlTag("b")} ${lvlTag("i")} ${lvlTag("d")}. <span style="border-bottom:1.5px dotted var(--accent)">Dotted words</span> have a short definition: hover or tap them.</p>`,
+    [{label:"Explore on my own"}]);
+}
+function showAbout(){
+  openModal("About Chip Lab", `
+    <div class="aboutbrand"><svg width="40" height="40" viewBox="0 0 26 26" aria-hidden="true"><rect x="5" y="5" width="16" height="16" rx="4" fill="var(--accent)"/><path d="M9 1v4M13 1v4M17 1v4M9 21v4M13 21v4M17 21v4M1 9h4M1 13h4M1 17h4M21 9h4M21 13h4M21 17h4" stroke="var(--muted)" stroke-width="1.6" stroke-linecap="round"/><circle cx="13" cy="13" r="3" fill="var(--signal)"/></svg>
+      <div><b style="font-size:17px">Chip Lab</b><span class="note">An AP Tensor Lab project · version ${VERSION}</span></div></div>
+    <p class="explain">An interactive lab for understanding how computers work, from transistors and logic gates up to CPUs, GPUs and AI chips, and how that hardware shows up in everyday code.</p>
+    <dl class="pinlist">
+      <dt>Created by</dt><dd>Arveend (AP Tensor Lab)</dd>
+      <dt>Built with</dt><dd>Claude (Anthropic) as a coding partner</dd>
+      <dt>Code</dt><dd><a href="https://github.com/aparve08" target="_blank" rel="noopener">github.com/aparve08</a></dd>
+      <dt>Portfolio</dt><dd><a href="https://aparve08.github.io" target="_blank" rel="noopener">aparve08.github.io</a></dd>
+      <dt>Licence</dt><dd>MIT</dd>
+    </dl>
+    <p class="note"><b>A teaching model, not a real chip.</b> Scales are shrunk (a 4×4 NPU, 32-lane GPU clusters), and figures such as transistor counts, clock speed and latencies are typical round numbers. Each screen points out where real hardware does more.</p>
+    <p class="note">Your saved chips and progress stay in this browser only. Use Export / Import in Build to move them.</p>`,
+    [{label:"Start here", onClick:() => { setTimeout(showStart, 0); }}, {label:"Close", primary:true}]);
+}
+$("#startBtn").addEventListener("click", showStart);
+$("#aboutBtn").addEventListener("click", showAbout);
+
 /* ---------- start ---------- */
 restore();
 app.dataset.mode = state.mode;
 setMode(state.mode);
+GL_ROOTS.forEach(s => glossify($(s)));
+if (state.firstVisit) setTimeout(showStart, 300);
 </script>
 </body>
 </html>
